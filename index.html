@@ -27,24 +27,41 @@
             .container {
                 height: 100%;
                 display: grid;
-                grid-template-columns: 200px 500px 1fr;
+                grid-template-columns: 200px 600px 1fr;
                 grid-template-rows: var(--top-row-height) 1fr 1fr;
-                grid-gap: 7px;
+                grid-gap: 8px;
                 padding: 8px;
             }
             .container > * {
                 border-radius: var(--border-radius);
             }
-            .button-free {
-                background-color: var(--bg-default);
+            .dropdown {
+                background-color:rgb(54, 54, 54);
                 border-radius: var(--border-radius);
                 min-width: 100px;
+                position: relative;
+            }
+            .dropdown-text {
                 padding: 7px;
                 text-align: center;
             }
-            .button-free:hover {
-                background-color: rgb(43, 43, 43);
+            .dropdown:hover {
+                background-color: rgb(74, 74, 74);
                 box-shadow: var(--hover-top-shadow-3d);
+            }
+            .dropdown-options {
+                position: absolute;
+                top: 40px;
+                z-index: 1;
+                min-width: 140px;
+                background-color: var(--bg-default);
+                border-radius: var(--border-radius);
+                padding: 7px;
+                border: 2px solid var(--border-active);
+            }
+            .dropdown-option {
+                display: inline-block;
+                padding: 3px 0px;
             }
 
             /*
@@ -67,10 +84,12 @@
             .select-pvp {
                 grid-row-start: 2;
                 --gradient-dir: 0deg;
+                transform-origin: 50% 80%;
             }
             .select-coop {
                 grid-row-start: 3;
                 --gradient-dir: 180deg;
+                transform-origin: 50% 20%;
             }
             .select:hover {
                 background-color: rgb(43, 43, 43);
@@ -140,37 +159,72 @@
             /*
              * LIST
              */
-             .list-layout {
-                grid-column-start: 3;
-                grid-row-start: 1;
+             .list-options {
+                grid-column-start: 2;
+                grid-column-end: 4;
 
+                grid-row-start: 1;
                 display: flex;
                 gap: 8px;
              }
-             .list-layout > * {
-                
-             }
             .list {
-                grid-column-start: 3;
+                grid-column-start: 2;
+                grid-column-end: 4;
+
+                grid-row-start: 2;
+                grid-row-end: 4;
                 background-color: var(--bg-default);
 
                 padding: 6px;
                 display: flex;
                 flex-wrap: wrap;
-                gap: 6px;
+                gap: 8px;
                 align-content: flex-start;
-            }
-            .list-pvp {
-                grid-row-start: 2;
-            }
-            .list-coop {
-                grid-row-start: 3;
             }
             .list-game {
                 background-color:rgb(54, 54, 54);
                 width: 300px;
                 height: 100px;
                 border-radius: 4px;
+                display: flex;
+                gap: 5px;
+
+                transition: transform 0.1s;
+            }
+            .list-game:hover {
+                transform: scale(1.015);
+            }
+            .map-preview {
+                background-color:rgb(123, 119, 119);
+                width: 100px;
+                height: 100px;
+                border-radius: 4px;
+            }
+            .game-info {
+                position: relative;
+                flex-grow: 1;
+                overflow: hidden;
+            }
+            .game-tags {
+                position: absolute;
+                bottom: 0px;
+                right: -4px;
+                
+                transform: skewX(-25deg);
+                font-size: 0.85em;
+            }
+            .game-tags.tag-rated {
+                background-color: rgb(55, 131, 255);
+            }
+            .game-tags.tag-campaign {
+                background-color: rgb(0, 159, 66);
+            }
+            .game-tags.tag-survival {
+                background-color: rgb(183, 89, 0);
+            }
+            .game-tags > * {
+                transform: skewX(25deg);
+                padding: 1px 9px 2px 8px;
             }
 
             
@@ -308,78 +362,114 @@
             <div class="skirmish" style="display: none">
                 TODO
             </div>
-            <div class="list-layout">
-                <div class="button-free">Table</div>
-                <div class="button-free">Tiles</div>
-            </div>
-            <div class="list list-pvp">
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    PvP Custom Game 01
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    PvP Custom Game 02
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    PvP Custom Game 03
+            <div class="list-options">
+                <div class="dropdown dropdown-gametypes">
+                    <div class="dropdown-text">Game Types</div>
+                    <div class="dropdown-options" style="display:none">
+                        <label class="dropdown-option"><input type="checkbox" checked>PvP Rated</label>
+                        <label class="dropdown-option"><input type="checkbox">PvP Survival</label>
+                        <label class="dropdown-option"><input type="checkbox" checked>PvP Other</label>
+                        <label class="dropdown-option"><input type="checkbox" checked>Coop Skirmish</label>
+                        <label class="dropdown-option"><input type="checkbox" checked>Coop Survival</label>
+                        <label class="dropdown-option"><input type="checkbox" checked>Coop Campaign</label>
+                    </div>
                 </div>
             </div>
-            <div class="list list-coop">
+            <div class="list">
                 <div class="list-game">
                     <div class="map-preview"></div>
-                    Coop Campaign Game 01
+                    <div class="game-info">
+                        <div class="game-name">PvP Custom Game 01</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-rated">
+                            <div>rated</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-game">
                     <div class="map-preview"></div>
-                    Coop Campaign Game 02
+                    <div class="game-info">
+                        <div class="game-name">PvP Custom Game 02</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-rated">
+                            <div>rated</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-game">
                     <div class="map-preview"></div>
-                    Coop Survival Game 01
+                    <div class="game-info">
+                        <div class="game-name">PvP Custom Game 03</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-rated">
+                            <div>rated (beta)</div>
+                        </div>
+                    </div>
                 </div>
+                <div class="list-game">
+                    <div class="map-preview"></div>
+                    <div class="game-info">
+                        <div class="game-name">PvP Custom Game 04</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags">
+                        </div>
+                    </div>
+                </div>
+                <div class="list-game">
+                    <div class="map-preview"></div>
+                    <div class="game-info">
+                        <div class="game-name">PvP Custom Game 05</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags">
+                        </div>
+                    </div>
+                </div>
+                <div class="list-game">
+                    <div class="map-preview"></div>
+                    <div class="game-info">
+                        <div class="game-name">Survival</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-survival">
+                            <div>survival</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-game">
+                    <div class="map-preview"></div>
+                    <div class="game-info">
+                        <div class="game-name">Campaign Mission 01</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-campaign">
+                            <div>campaign</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-game">
+                    <div class="map-preview"></div>
+                    <div class="game-info">
+                        <div class="game-name">Campaign Mission 02</div>
+                        <div class="game-info"></div>
+                        <div class="game-tags tag-campaign">
+                            <div>campaign</div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <script>
             $(document).ready(() => {
-                var container = $(".container");
-                var pvp = $(".select-pvp");
-                var pvp_games = $(".list-pvp");
-                var coop = $(".select-coop");
-                var coop_games = $(".list-coop");
-                var button_back = $(".button-back");
-                button_back.on("click", function() {
-                    button_back.hide();
-                    pvp.removeClass("active");
-                    pvp.removeClass("inactive");
-                    coop.removeClass("active");
-                    coop.removeClass("inactive");
-                    pvp_games.show();
-                    coop_games.show();
-                    container.css("grid-template-rows", "var(--top-row-height) 1fr 1fr");
-                });
-                pvp.on("click", function() {
-                    button_back.show();
-                    pvp.removeClass("inactive");
-                    pvp.addClass("active");
-                    coop.removeClass("active");
-                    coop.addClass("inactive");
-                    coop_games.hide();
-                    pvp_games.show();
-                    container.css("grid-template-rows", "var(--top-row-height) 1fr var(--inactive-row-heigh)");
-                });
-                coop.on("click", function() {
-                    button_back.show();
-                    coop.removeClass("inactive");
-                    coop.addClass("active");
-                    pvp.removeClass("active");
-                    pvp.addClass("inactive");
-                    pvp_games.hide();
-                    coop_games.show();
-                    container.css("grid-template-rows", "var(--top-row-height) var(--inactive-row-heigh) 1fr");
+                // games list
+                var options = $(".dropdown-gametypes .dropdown-options");
+                var text = $(".dropdown-gametypes .dropdown-text");
+                text.on("click", function(e) {
+                    options.toggle();
                 });
 
+                var list = $(".list");
+                var listOptions = $(".list-options");
+
+                // mode selection
                 var modes = ["tmm", "custom", "campaign", "survival", "skirmish"];
                 var elements = [];
                 for (let mode of modes) {
@@ -387,10 +477,15 @@
                     let detail = $("." + mode);
                     elements.push({ button: button, detail: detail });
                     button.on("click", function(e) {
+                        var isActive = button.hasClass("active");
                         resetDetailArea();
-                        button.addClass("active");
-                        detail.show();
-                        e.stopPropagation();
+                        if (!isActive) {
+                            button.addClass("active");
+                            detail.show();
+                            list.css("grid-column-start", "3");
+                            listOptions.css("grid-column-start", "3");
+                        }
+                        // e.stopPropagation();
                     });
                 }
                 function resetDetailArea() {
@@ -398,6 +493,8 @@
                         element.detail.hide();
                         element.button.removeClass("active");
                     }
+                    list.css("grid-column-start", "2");
+                    listOptions.css("grid-column-start", "2");
                 }
             });
         </script>

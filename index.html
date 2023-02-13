@@ -7,14 +7,21 @@
             :root {
             /* General */
             --border-radius: 6px;
+            --border-radius-inner: 4px;
             --bg-default: rgb(36, 36, 36);
             --top-row-height: 35px;
             --inactive-row-heigh: 35px;
 
-            --border-default: 3px solid rgb(66, 66, 66, 0);
+            --border-default-size: 3px;
+            --border-default: var(--border-default-size) solid rgb(66, 66, 66, 0);
             --border-active: rgb(18, 77, 167);
             --hover-top-shadow-3d: inset 0px 2px 2px -1px rgb(90, 90, 90); 
             --hover-top-shadow-3d-blue: inset 0px 2px 2px -1px rgb(46, 83, 143);
+
+            --text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+            }
+            * {
+                box-sizing: border-box;
             }
             body {
                 background-color: black;
@@ -27,7 +34,7 @@
             .container {
                 height: 100%;
                 display: grid;
-                grid-template-columns: 200px 600px 1fr;
+                grid-template-columns: 175px 600px 1fr;
                 grid-template-rows: var(--top-row-height) 1fr 1fr;
                 grid-gap: 8px;
                 padding: 8px;
@@ -73,7 +80,7 @@
                 flex-direction: column;
                 align-items: stretch;
 
-                font-size: 1.1em;
+                font-size: 1.07em;
                 text-align: center;
 
                 background-color: var(--bg-default);
@@ -124,11 +131,11 @@
                 flex-grow: 1;
             }
             .select-entry {
-                padding: 20px 5px;
+                padding: 17px 5px;
             }
             .select-entry:hover {
                 background-color: rgb(49, 49, 49);
-                text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+                text-shadow: var(--text-shadow);
 
                 border-left-color: var(--border-active);
                 border-right-color: var(--border-active);
@@ -138,7 +145,7 @@
             }
             .select-descr {
                 padding: 15px 5px;
-                font-size: 1.8em;
+                font-size: 1.65em;
 
                 transition: font-size 0.4s;
             }
@@ -185,7 +192,7 @@
                 background-color:rgb(54, 54, 54);
                 width: 300px;
                 height: 100px;
-                border-radius: 4px;
+                border-radius: var(--border-radius-inner);
                 display: flex;
                 gap: 5px;
 
@@ -198,7 +205,7 @@
                 background-color:rgb(123, 119, 119);
                 width: 100px;
                 height: 100px;
-                border-radius: 4px;
+                border-radius: var(--border-radius-inner);
             }
             .game-info {
                 position: relative;
@@ -228,7 +235,7 @@
             }
 
             
-            .tmm, .custom, .campaign, .survival, .skirmish {
+            .tmm, .custom, .campaigns, .survival, .skirmish {
                 grid-column-start: 2;
                 grid-row-start: 2;
                 grid-row-end: 4;
@@ -250,7 +257,7 @@
             }
             .tmm-player, .tmm-party-player, .tmm-queue, .tmm-chat {
                 background-color:rgb(54, 54, 54);
-                border-radius: 4px;
+                border-radius: var(--border-radius-inner);
                 padding: 5px;
             }
             .tmm-party-player {
@@ -292,9 +299,82 @@
             }
             .tmm-chat-input {
                 background-color: rgb(37, 37, 37);
-                border-radius: 4px;
+                border-radius: var(--border-radius-inner);
                 padding: 5px;
                 margin-top: auto;
+            }
+
+            .campaigns {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                padding: 6px;
+            }
+            .campaign-group {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .campaign {
+                border-radius: var(--border-radius-inner);
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                overflow: hidden;
+            }
+            .campaign > * {
+                background-color:rgb(54, 54, 54);
+            }
+            .campaign-select {
+                width: 100%;
+                padding: 5px 10px;
+                font-size: 1.2em;
+
+                border-left: var(--border-default);
+                border-right: var(--border-default);
+            }
+            .campaign-select:hover {
+                border-color: var(--border-active);
+                background-color: rgb(75, 75, 75);
+                
+            }
+            .campaign-select:hover > .campaign-name {
+                text-shadow: var(--text-shadow);
+            }
+            .campaign-select.active {
+                background-color: var(--border-active);
+            }
+            .campaign-name {
+                display: flex;
+                justify-content: space-between;
+            }
+            .campaign-desc {
+                margin-top: 4px;
+                font-size: 0.65em;
+                color:rgb(150, 150, 150);
+            }
+            .campaign-content {
+                display: flex;
+                justify-content: space-between;
+            }
+            .campaign-missions {
+                display: flex;
+                flex-direction: column;
+            }
+            .campaign-missions > div {
+                padding: 4px 10px;
+                border-left: var(--border-default);
+                border-right: var(--border-default);
+                transition: transform 0.1s;
+                transform-origin: left;
+            }
+            .campaign-missions > div:hover {
+                border-color: var(--border-active);
+                transform: scale(1.05);
+                background-color: rgb(37, 37, 37);
+            }
+            .mission-descs {
+                padding: 5px 10px;
             }
         </style>
     </head>
@@ -311,7 +391,7 @@
                 <div class="select-entry select-pvp-entry select-custom">Custom</div>
             </div>
             <div class="select select-coop">
-                <div class="select-entry select-coop-entry select-campaign">Campaign</div>
+                <div class="select-entry select-coop-entry select-campaigns">Campaign</div>
                 <div class="select-entry select-coop-entry select-survival">Survival</div>
                 <div class="select-entry select-coop-entry select-skirmish">Skirmish</div>
                  <!-- TODP space here; clicking anywhere here on in descr should maximize PVE and leave only 1 line of PVP -->
@@ -353,8 +433,96 @@
             <div class="custom" style="display: none">
                 TODO
             </div>
-            <div class="campaign" style="display: none">
-                TODO
+            <div class="campaigns" style="display: none">
+                <div class="campaign-group">
+                    <div class="campaign">
+                        <div class="campaign-select">
+                            <div class="campaign-name">
+                                <div>Supreme Commander</div>
+                                <div>UEF</div>
+                            </div>
+                            <div class="campaign-desc">
+                                For beginners. Slowly get familiar with the UEF arsenal.
+                            </div>
+                        </div>
+                        <div class="campaign-content" style="display: none;">
+                            <div class="campaign-missions">
+                                <div>Mission 1 - Black Earth</div>
+                                <div>Mission 2 - Snow Blind</div>
+                                <div>Mission 3 - Metal Shark</div>
+                                <div>Mission 4 - Vaccine</div>
+                                <div>Mission 5 - Forge</div>
+                                <div>Mission 6 - Stone Wall</div>
+                            </div>
+                            <div class="mission-descs">
+                                <div>TODO</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="campaign">
+                        <div class="campaign-select">
+                            <div class="campaign-name">
+                                <div>Supreme Commander</div>
+                                <div>Cybran</div>
+                            </div>
+                            <div class="campaign-desc">
+                                For beginners. Expand your knowledge about other factions.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="campaign">
+                        <div class="campaign-select">
+                            <div class="campaign-name">
+                                <div>Supreme Commander</div>
+                                <div>Aeon</div>
+                            </div>
+                            <div class="campaign-desc">
+                                Updated Aeon mission with higher difficulty than in the base game.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="campaign">
+                    <div class="campaign-select">
+                        <div class="campaign-name">Supreme Commander: Forged Alliance</div>
+                        <div class="campaign-desc">
+                            The ultimate campaign experience.
+                        </div>
+                    </div>
+                    <div class="campaign-content" style="display: none;">
+                        <div class="campaign-missions">
+                            <div>Mission 1 - Black Day</div>
+                            <div>Mission 2 - Dawn</div>
+                            <div>Mission 3 - Red Flag</div>
+                            <div>Mission 4 - Meltdown</div>
+                            <div>Mission 5 - Mind Games</div>
+                            <div>Mission 6 - Overlord</div>
+                        </div>
+                        <div class="mission-descs">
+                        </div>
+                    </div>
+                </div>
+                <div class="campaign">
+                    <div class="campaign-select">
+                        <div class="campaign-name">
+                            <div>FAF</div>
+                            <div>Serpahim</div>
+                        </div>
+                        <div class="campaign-desc">
+                            Work in progress. An entire new campaign with high difficulty.
+                        </div>
+                    </div>
+                </div>
+                <div class="campaign">
+                    <div class="campaign-select">
+                        <div class="campaign-name">
+                            <div>FAF Custom Missions</div>
+                        </div>
+                        <div class="campaign-desc">
+                            Additional fan-made  stand-alone missions.
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="survival" style="display: none">
                 TODO
@@ -459,44 +627,69 @@
         </div>
         <script>
             $(document).ready(() => {
-                // games list
-                var options = $(".dropdown-gametypes .dropdown-options");
-                var text = $(".dropdown-gametypes .dropdown-text");
-                text.on("click", function(e) {
-                    options.toggle();
-                });
-
-                var list = $(".list");
-                var listOptions = $(".list-options");
-
-                // mode selection
-                var modes = ["tmm", "custom", "campaign", "survival", "skirmish"];
-                var elements = [];
-                for (let mode of modes) {
-                    let button = $(".select-" + mode);
-                    let detail = $("." + mode);
-                    elements.push({ button: button, detail: detail });
-                    button.on("click", function(e) {
-                        var isActive = button.hasClass("active");
-                        resetDetailArea();
-                        if (!isActive) {
-                            button.addClass("active");
-                            detail.show();
-                            list.css("grid-column-start", "3");
-                            listOptions.css("grid-column-start", "3");
-                        }
-                        // e.stopPropagation();
+                {
+                    // games list
+                    var options = $(".dropdown-gametypes .dropdown-options");
+                    var text = $(".dropdown-gametypes .dropdown-text");
+                    text.on("click", function(e) {
+                        options.toggle();
                     });
-                }
-                function resetDetailArea() {
-                    for (let element of elements) {
-                        element.detail.hide();
-                        element.button.removeClass("active");
+                } {
+                    // mode selection
+                    var list = $(".list");
+                    var listOptions = $(".list-options");
+                    
+                    var modes = ["tmm", "custom", "campaigns", "survival", "skirmish"];
+                    var elements = [];
+                    for (let mode of modes) {
+                        let button = $(".select-" + mode);
+                        let detail = $("." + mode);
+                        elements.push({ button: button, detail: detail });
+                        button.on("click", function(e) {
+                            var isActive = button.hasClass("active");
+                            resetDetailArea();
+                            if (!isActive) {
+                                button.addClass("active");
+                                detail.show();
+                                list.css("grid-column-start", "3");
+                                listOptions.css("grid-column-start", "3");
+                            }
+                            // e.stopPropagation();
+                        });
                     }
-                    list.css("grid-column-start", "2");
-                    listOptions.css("grid-column-start", "2");
+                    function resetDetailArea() {
+                        for (let element of elements) {
+                            element.detail.hide();
+                            element.button.removeClass("active");
+                        }
+                        list.css("grid-column-start", "2");
+                        listOptions.css("grid-column-start", "2");
+                    }
+                    // elements[2].button.click();
+                } {
+                    // campaigns
+                    var selects = $(".campaign-select");
+                    selects.on("click", function(e) {
+                        var element = $(this);
+                        var isActive = element.hasClass("active");
+                        var campaign = element.parent();
+                        reset();
+                        if (!isActive) {
+                            element.addClass("active");
+                            campaign.find(".campaign-content").show();
+                        }
+                    });
+                    function reset() {
+                        selects.removeClass("active");
+                        for (let select of selects) {
+                            var element = $(select);
+                            var campaign = element.parent();
+                            campaign.find(".campaign-content").hide();
+                        }
+                    }
                 }
             });
+            
         </script>
     </body>
 </html>

@@ -338,15 +338,21 @@
                 background-color: rgb(75, 75, 75);
                 
             }
-            .campaign-select:hover > .campaign-name {
-                text-shadow: var(--text-shadow);
-            }
             .campaign-select.active {
                 background-color: var(--border-active);
             }
             .campaign-name {
                 display: flex;
                 justify-content: space-between;
+            }
+            .campaign-select:hover > .campaign-name {
+                text-shadow: var(--text-shadow);
+            }
+            .campaign-select.inactive > .campaign-name {
+                color:rgb(176, 176, 176);
+            }
+            .campaign-select.inactive:hover > .campaign-name {
+                color: inherit;
             }
             .campaign-desc {
                 margin-top: 4px;
@@ -675,11 +681,14 @@
                         var campaign = element.parent();
                         reset();
                         if (!isActive) {
+                            selects.addClass("inactive");
+                            element.removeClass("inactive");
                             element.addClass("active");
                             campaign.find(".campaign-content").show();
                         }
                     });
                     function reset() {
+                        selects.removeClass("inactive");
                         selects.removeClass("active");
                         for (let select of selects) {
                             var element = $(select);

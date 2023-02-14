@@ -304,11 +304,17 @@
                 margin-top: auto;
             }
 
+            /*
+             * CAMPAIGNS
+             */
             .campaigns {
                 display: flex;
                 flex-direction: column;
                 gap: 14px;
                 padding: 6px;
+            }
+            .campaigns.single {
+                gap: 0px;
             }
             .campaign-group {
                 display: flex;
@@ -321,6 +327,10 @@
                 flex-direction: column;
                 gap: 2px;
                 overflow: hidden;
+            }
+            .campaign.active {
+                border: var(--border-default);
+                border-color: var(--border-active);
             }
             .campaign > * {
                 background-color:rgb(54, 54, 54);
@@ -348,12 +358,12 @@
             .campaign-select:hover > .campaign-name {
                 text-shadow: var(--text-shadow);
             }
-            .campaign-select.inactive > .campaign-name {
+            /* .campaign-select.inactive > .campaign-name {
                 color:rgb(176, 176, 176);
             }
             .campaign-select.inactive:hover > .campaign-name {
                 color: inherit;
-            }
+            } */
             .campaign-desc {
                 margin-top: 4px;
                 font-size: 0.65em;
@@ -362,25 +372,60 @@
             .campaign-content {
                 display: flex;
                 justify-content: space-between;
+                align-items: stretch;
+                gap: 2px;
+                background-color: var(--bg-default);
             }
             .campaign-missions {
                 display: flex;
                 flex-direction: column;
+                gap: 2px;
+                flex-grow: 1;
             }
             .campaign-missions > div {
-                padding: 4px 10px;
+                background-color:rgb(54, 54, 54);
+                padding: 5px 10px;
+                padding-right: 25px;
                 border-left: var(--border-default);
                 border-right: var(--border-default);
-                transition: transform 0.1s;
-                transform-origin: left;
+                /* transition: transform 0.1s;
+                transform-origin: left; */
             }
             .campaign-missions > div:hover {
                 border-color: var(--border-active);
-                transform: scale(1.05);
+                /* transform: scale(1.05); */
                 background-color: rgb(37, 37, 37);
             }
-            .mission-descs {
-                padding: 5px 10px;
+            .campaign-missions > div.active {
+                background-color: var(--border-active);
+            }
+            /* .mission-spacer {
+                flex-grow: 1;
+                background-color:rgb(54, 54, 54);
+            } */
+            .mission-status {
+                background-color:rgb(54, 54, 54);
+                flex-grow: 1;
+
+                background-image: url("/no_image_available.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: right center; 
+            }
+            .create-campaign {
+                margin-top: auto;
+                height: 400px;
+                display: flex;
+                gap: 2px;
+            }
+            .create-campaign > div {
+                background-color:rgb(54, 54, 54);
+            }
+            .mission-settings {
+                flex-grow: 1;
+            }
+            .mission-leaderboard {
+                width: 200px;
             }
         </style>
     </head>
@@ -460,9 +505,8 @@
                                 <div>Mission 5 - Forge</div>
                                 <div>Mission 6 - Stone Wall</div>
                             </div>
-                            <div class="mission-descs">
-                                <div>TODO</div>
-                            </div>
+                            <!-- <div class="mission-spacer"></div> -->
+                            <div class="mission-status"></div>
                         </div>
                     </div>
                     <div class="campaign">
@@ -504,8 +548,7 @@
                             <div>Mission 5 - Mind Games</div>
                             <div>Mission 6 - Overlord</div>
                         </div>
-                        <div class="mission-descs">
-                        </div>
+                        <div class="mission-status"></div>
                     </div>
                 </div>
                 <div class="campaign">
@@ -527,6 +570,15 @@
                         <div class="campaign-desc">
                             Additional fan-made  stand-alone missions.
                         </div>
+                    </div>
+                </div>
+                <div class="create-campaign" style="display: none">
+                    <!-- Create game / show leaderboards. -->
+                    <div class="mission-settings">
+                        Create game
+                    </div>
+                    <div class="mission-leaderboard">
+                        Leaderboard
                     </div>
                 </div>
             </div>
@@ -671,31 +723,60 @@
                         list.css("grid-column-start", "2");
                         listOptions.css("grid-column-start", "2");
                     }
-                    // elements[2].button.click();
+                    elements[2].button.click();
                 } {
                     // campaigns
-                    var selects = $(".campaign-select");
+                    var container = $(".campaigns");
+                    var campaigns = $(".campaign");
+                    var selects = campaigns.find(".campaign-select");
+                    var contents = campaigns.find(".campaign-content");
                     selects.on("click", function(e) {
                         var element = $(this);
                         var isActive = element.hasClass("active");
-                        var campaign = element.parent();
+                        var campaign = element.closest(".campaign");
                         reset();
                         if (!isActive) {
                             selects.addClass("inactive");
                             element.removeClass("inactive");
                             element.addClass("active");
+                            campaign.addClass("active");
                             campaign.find(".campaign-content").show();
                         }
                     });
                     function reset() {
                         selects.removeClass("inactive");
                         selects.removeClass("active");
-                        for (let select of selects) {
-                            var element = $(select);
-                            var campaign = element.parent();
-                            campaign.find(".campaign-content").hide();
-                        }
+                        campaigns.removeClass("active");
+                        campaigns.show();
+                        contents.hide();
+                        create.hide();
+                        resetMissions();
                     }
+
+                    var missionSelects = $(".campaign-missions").children();
+                    var create = $(".create-campaign");
+                    missionSelects.on("click", function(e) {
+                        var element = $(this);
+                        var isActive = element.hasClass("active");
+                        var campaign = element.closest(".campaign");
+                        resetMissions();
+                        if (!isActive) {
+                            element.addClass("active");
+                            campaigns.hide();
+                            campaign.show();
+                            create.show();
+                            container.addClass("single");
+                        }
+                    });
+                    function resetMissions() {
+                        missionSelects.removeClass("active");
+                        campaigns.show();
+                        create.hide();
+                        container.removeClass("single");
+                    }
+
+                    // selects.get(0).click();
+                    // missionSelects.get(1).click();
                 }
             });
             

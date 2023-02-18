@@ -23,6 +23,24 @@
             * {
                 box-sizing: border-box;
             }
+            input {
+                color: inherit;
+                background-color: inherit;
+                border-radius: var(--border-radius-inner);
+                padding: 5px;
+            }
+            .input-inner {
+                background-color: rgb(37, 37, 37);
+                border-color: rgb(86, 86, 86);
+            }
+            .input-inner:disabled {
+                background-color: rgb(49, 49, 49);
+                color: rgb(128, 128, 128);
+            }
+            input:disabled::placeholder {
+                color: rgb(84, 84, 84);
+                opacity: 1;
+            }
             body {
                 background-color: black;
                 color: white;
@@ -299,8 +317,6 @@
             }
             .tmm-chat-input {
                 background-color: rgb(37, 37, 37);
-                border-radius: var(--border-radius-inner);
-                padding: 5px;
                 margin-top: auto;
             }
 
@@ -388,12 +404,9 @@
                 padding-right: 25px;
                 border-left: var(--border-default);
                 border-right: var(--border-default);
-                /* transition: transform 0.1s;
-                transform-origin: left; */
             }
             .campaign-missions > div:hover {
                 border-color: var(--border-active);
-                /* transform: scale(1.05); */
                 background-color: rgb(37, 37, 37);
             }
             .campaign-missions > div.active {
@@ -412,20 +425,129 @@
                 background-repeat: no-repeat;
                 background-position: right center; 
             }
-            .create-campaign {
-                margin-top: auto;
-                height: 400px;
+            .campaign-mission {
+                margin-top: 40px;
+                flex-grow: 1;
                 display: flex;
-                gap: 2px;
+                align-items: stretch;
+                gap: 16px;
             }
-            .create-campaign > div {
+            .mission-leaderboard, .create-mission-settings, .mission-desc {
+                border-radius: var(--border-radius-inner);
+                overflow: hidden;
+            }
+            .create-mission-settings, .mission-desc {
                 background-color:rgb(54, 54, 54);
             }
-            .mission-settings {
+            .create-mission {
                 flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .create-mission-settings {
+                padding: 6px;
+            }
+            .create-mission-buttons {
+                display: flex;
+                gap: 1px;
+                margin-bottom: 5px;
+            }
+            .mission-select-solo, .mission-select-coop, .mission-button-play {
+                padding: 5px 10px;
+                border: var(--border-default);
+            }
+            .mission-select-solo, .mission-select-coop {
+                background-color: rgb(69, 69, 69);
+            }
+            .mission-select-solo:hover, .mission-select-coop:hover {
+                background-color: rgb(86, 86, 86);
+                border-color: var(--border-active);
+            }
+            .create-mission-buttons > div.active {
+                background-color: var(--border-active);
+            }
+            .mission-button-play, .mission-select-solo {
+                border-top-left-radius: var(--border-radius-inner);
+                border-bottom-left-radius: var(--border-radius-inner);
+            }
+            .mission-button-play, .mission-select-coop {
+                border-top-right-radius: var(--border-radius-inner);
+                border-bottom-right-radius: var(--border-radius-inner);
+            }
+            .mission-button-play {
+                margin-left: auto;
+                background-color: rgb(219, 219, 219);
+                color:rgb(0, 0, 0);
+                font-weight: 500;
+
+                transition: transform 0.1s;
+            }
+            .mission-button-play:hover {
+                background-color: rgb(250, 250, 250);
+                transform: scale(1.025);
+            }
+            .create-mission-settings-coop > input {
+                width: 100%;
+                background-color: rgb(37, 37, 37);
+                margin-top: 5px;
+            }
+            .mission-desc {
+                line-height: 1.2rem;
+                font-size: 0.9em;
+                padding: 5px 5px;
             }
             .mission-leaderboard {
-                width: 200px;
+                min-width: 200px;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .mission-leaderboard-header, .mission-leaderboard-list > div, .mission-leaderboard-pages > div {
+                background-color:rgb(54, 54, 54);
+                padding: 5px 5px;
+            }
+            .mission-leaderboard-header {
+                text-align: center;
+            }
+            .mission-leaderboard-list {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .mission-leaderboard-list > div:last-child {
+                flex-grow: 1;
+            }
+            .mission-leaderboard-pages {
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
+                gap: 2px;
+            }
+            .mission-leaderboard-pages > div {
+                flex-grow: 1;
+            }
+            .mission-leaderboard-pages > div:hover {
+                background-color: rgb(75, 75, 75);
+            }
+            .mission-leaderboard-info {
+                display: flex;
+                justify-content: space-between;
+                padding-bottom: 4px;
+            }
+            .mission-leaderboard-info > div:last-child {
+                text-decoration: underline;
+            }
+            .mission-leaderboard-players {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .mission-leaderboard-players > div {
+                background-color: rgb(86, 86, 86);
+                border-radius: var(--border-radius-inner);
+                padding: 1px 4px;
             }
         </style>
     </head>
@@ -572,13 +694,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="create-campaign" style="display: none">
+                <div class="campaign-mission" style="display: none">
                     <!-- Create game / show leaderboards. -->
-                    <div class="mission-settings">
-                        Create game
+                    <div class="create-mission">
+                        <div class="create-mission-settings">
+                            <div class="create-mission-buttons">
+                                <div class="mission-select-solo">Solo</div>
+                                <div class="mission-select-coop active">Coop</div>
+                                <div class="mission-button-play">Host</div>
+                            </div>
+                            <div class="create-mission-settings-coop">
+                                <input class="input-inner" type="text" placeholder="Game Title (Required)">
+                                <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+                            </div>
+                        </div>
+                        <div class="mission-desc">
+                            Fort Clarke, located on the planet Griffin IV, is the UEF's last stronghold.
+Seraphim and Order forces are attacking the fort with overwhelming force. 
+If Fort Clarke falls, the UEF is finished. 
+You will defeat the enemy commanders on Griffin IV and end the siege of Fort Clarke.
+                        </div>
                     </div>
                     <div class="mission-leaderboard">
-                        Leaderboard
+                        <div class="mission-leaderboard-header">Leaderboard</div>
+                        <div class="mission-leaderboard-list">
+                            <div class="mission-leaderboard-entry">
+                                <div class="mission-leaderboard-info">
+                                    <div>30:15</div>
+                                    <div>Replay</div>
+                                </div>
+                                <div class="mission-leaderboard-players">
+                                    <div>Greg</div>
+                                    <div>Timmothy</div>
+                                </div>
+                            </div>
+                            <div class="mission-leaderboard-entry">
+                                <div class="mission-leaderboard-info">
+                                    <div>25:09</div>
+                                    <div>Replay</div>
+                                </div>
+                                <div class="mission-leaderboard-players">
+                                    <div>Greg</div>
+                                    <div>Timmothy</div>
+                                    <div>Timmothy2</div>
+                                    <div>Greg2</div>
+                                </div>
+                            </div>
+                            <div class="mission-leaderboard-entry"></div>
+                        </div>
+                        <div class="mission-leaderboard-pages">
+                            <div>❮❮</div>
+                            <div>❮</div>
+                            <div>❯</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -754,7 +922,7 @@
                     }
 
                     var missionSelects = $(".campaign-missions").children();
-                    var create = $(".create-campaign");
+                    var create = $(".campaign-mission");
                     missionSelects.on("click", function(e) {
                         var element = $(this);
                         var isActive = element.hasClass("active");
@@ -774,6 +942,26 @@
                         create.hide();
                         container.removeClass("single");
                     }
+
+                    var playOrHost = $(".mission-button-play");
+                    var coopSwitch = $(".mission-select-solo, .mission-select-coop");
+                    var coopSettings = $(".create-mission-settings-coop");
+                    var coopSettingsTitle = coopSettings.children().eq(0);
+                    var coopSettingsPassword = coopSettings.children().eq(1);
+                    coopSwitch.on("click", function(e) {
+                        coopSwitch.toggleClass("active");
+                        var element = $(this);
+                        var isSolo = !element.hasClass("mission-select-coop");
+                        coopSettings.children().prop("disabled", isSolo);
+                        if (isSolo) {
+                            coopSettingsTitle.val("Katharsas's game");
+                            playOrHost.text("Play");
+                        } else {
+                            coopSettingsTitle.val("");
+                            playOrHost.text("Host");
+                        }
+                    });
+                    coopSwitch.eq(0).click();
 
                     // selects.get(0).click();
                     // missionSelects.get(1).click();

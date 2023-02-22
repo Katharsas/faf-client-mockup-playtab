@@ -5,25 +5,35 @@
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;lang=en" />
         <style>
             :root {
-            /* General */
-            --border-radius: 6px;
-            --border-radius-inner: 4px;
-            --bg-default: rgb(36, 36, 36);
-            --top-row-height: 35px;
-            --inactive-row-heigh: 35px;
+                /* General */
+                --border-radius: 6px;
+                --border-radius-inner: 4px;
+                --bg-default: rgb(36, 36, 36);
+                --bg-inner: rgb(54, 54, 54);
+                --top-row-height: 35px;
+                --inactive-row-heigh: 35px;
 
-            --border-default-size: 3px;
-            --border-default: var(--border-default-size) solid rgb(66, 66, 66, 0);
-            --border-active: rgb(18, 77, 167);
-            --hover-top-shadow-3d: inset 0px 2px 2px -1px rgb(90, 90, 90); 
-            --hover-top-shadow-3d-blue: inset 0px 2px 2px -1px rgb(46, 83, 143);
+                --border-default-size: 3px;
+                --border-default: var(--border-default-size) solid rgb(66, 66, 66, 0);
+                --border-active: rgb(18, 77, 167);
+                --hover-top-shadow-3d: inset 0px 2px 2px -1px rgb(90, 90, 90); 
+                --hover-top-shadow-3d-blue: inset 0px 2px 2px -1px rgb(46, 83, 143);
 
-            --text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+                --text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+                
+                --radio-buttons-bg: rgb(110, 110, 110);
             }
             * {
                 box-sizing: border-box;
             }
-            input {
+            input[type=checkbox] {
+                vertical-align: middle; 
+                position: relative;
+                bottom: .10em;
+                margin-right: 6px;
+                background-color: var(--border-active);;
+            }
+            input[type=text] {
                 color: inherit;
                 background-color: inherit;
                 border-radius: var(--border-radius-inner);
@@ -40,6 +50,36 @@
             input:disabled::placeholder {
                 color: rgb(84, 84, 84);
                 opacity: 1;
+            }
+            .radio-buttons {
+                display: flex;
+                gap: 1px;
+                border: 1px solid var(--radio-buttons-bg);
+                background-color: var(--radio-buttons-bg);
+                border-radius: 5px;
+                text-align: center;
+            }
+            .radio-buttons > div {
+                background-color: rgb(74, 74, 74);
+            }
+            .radio-buttons:hover {
+                border-color: var(--border-active);
+                background-color: var(--border-active);
+            }
+            .radio-buttons > div:hover {
+                background-color: var(--bg-inner);
+                border-color: var(--border-active);
+            }
+            .radio-buttons > div.active {
+                background-color: var(--border-active);
+            }
+            .radio-buttons > div:first-child {
+                border-top-left-radius: var(--border-radius-inner);
+                border-bottom-left-radius: var(--border-radius-inner);
+            }
+            .radio-buttons > div:last-child {
+                border-top-right-radius: var(--border-radius-inner);
+                border-bottom-right-radius: var(--border-radius-inner);
             }
             body {
                 background-color: black;
@@ -61,7 +101,7 @@
                 border-radius: var(--border-radius);
             }
             .dropdown {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 border-radius: var(--border-radius);
                 min-width: 100px;
                 position: relative;
@@ -78,7 +118,7 @@
                 position: absolute;
                 top: 40px;
                 z-index: 1;
-                min-width: 140px;
+                min-width: 180px;
                 background-color: var(--bg-default);
                 border-radius: var(--border-radius);
                 padding: 7px;
@@ -207,7 +247,7 @@
                 align-content: flex-start;
             }
             .list-game {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 width: 300px;
                 height: 100px;
                 border-radius: var(--border-radius-inner);
@@ -274,7 +314,7 @@
                 margin-top: 5px;
             }
             .tmm-player, .tmm-party-player, .tmm-queue, .tmm-chat {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 border-radius: var(--border-radius-inner);
                 padding: 5px;
             }
@@ -349,7 +389,7 @@
                 border-color: var(--border-active);
             }
             .campaign > * {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
             }
             .campaign-select {
                 width: 100%;
@@ -374,12 +414,6 @@
             .campaign-select:hover > .campaign-name {
                 text-shadow: var(--text-shadow);
             }
-            /* .campaign-select.inactive > .campaign-name {
-                color:rgb(176, 176, 176);
-            }
-            .campaign-select.inactive:hover > .campaign-name {
-                color: inherit;
-            } */
             .campaign-desc {
                 margin-top: 4px;
                 font-size: 0.65em;
@@ -399,7 +433,7 @@
                 flex-grow: 1;
             }
             .campaign-missions > div {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 padding: 5px 10px;
                 padding-right: 25px;
                 border-left: var(--border-default);
@@ -412,12 +446,12 @@
             .campaign-missions > div.active {
                 background-color: var(--border-active);
             }
-            /* .mission-spacer {
-                flex-grow: 1;
-                background-color:rgb(54, 54, 54);
-            } */
+
+            /*
+             * CAMPAIGN MISSION SETINGS
+             */
             .mission-status {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 flex-grow: 1;
 
                 background-image: url("/no_image_available.png");
@@ -437,7 +471,7 @@
                 overflow: hidden;
             }
             .create-mission-settings, .mission-desc {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
             }
             .create-mission {
                 flex-grow: 1;
@@ -446,38 +480,26 @@
                 gap: 16px;
             }
             .create-mission-settings {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
                 padding: 6px;
             }
             .create-mission-buttons {
                 display: flex;
-                gap: 1px;
-                margin-bottom: 5px;
             }
-            .mission-select-solo, .mission-select-coop, .mission-button-play {
-                padding: 5px 10px;
-                border: var(--border-default);
+            .create-mission-buttons > .radio-buttons > div {
+                padding: 5px 14px;
             }
-            .mission-select-solo, .mission-select-coop {
-                background-color: rgb(69, 69, 69);
-            }
-            .mission-select-solo:hover, .mission-select-coop:hover {
-                background-color: rgb(86, 86, 86);
-                border-color: var(--border-active);
-            }
-            .create-mission-buttons > div.active {
-                background-color: var(--border-active);
-            }
-            .mission-button-play, .mission-select-solo {
-                border-top-left-radius: var(--border-radius-inner);
-                border-bottom-left-radius: var(--border-radius-inner);
-            }
-            .mission-button-play, .mission-select-coop {
-                border-top-right-radius: var(--border-radius-inner);
-                border-bottom-right-radius: var(--border-radius-inner);
+            .mission-button-play {
+                padding: 6px 12px;
+                min-width: 70px;
+                text-align: center;
             }
             .mission-button-play {
                 margin-left: auto;
                 background-color: rgb(219, 219, 219);
+                border-radius: var(--border-radius-inner);
                 color:rgb(0, 0, 0);
                 font-weight: 500;
 
@@ -487,16 +509,40 @@
                 background-color: rgb(250, 250, 250);
                 transform: scale(1.025);
             }
-            .create-mission-settings-coop > input {
+            .mission-hosting > input {
                 width: 100%;
                 background-color: rgb(37, 37, 37);
                 margin-top: 5px;
             }
+            .mission-difficulty {
+                display: flex;
+                margin-top: 15px;
+            }
+            .mission-difficulty > div {
+                flex-grow: 1;
+                padding: 5px 10px;
+            }
+            .mission-expansion {
+                padding: 4px 1px;
+            }
+            .mission-warning {
+                margin-top: 15px;
+                background-color:rgb(53, 93, 37);
+                color: rgb(220, 220, 220);
+                font-size: 0.85em;
+                text-align: center;
+                border-radius: var(--border-radius-inner);
+            }
+
             .mission-desc {
                 line-height: 1.2rem;
                 font-size: 0.9em;
                 padding: 5px 5px;
             }
+
+            /*
+             * CAMPAIGN LEADERBOARD
+             */
             .mission-leaderboard {
                 min-width: 200px;
                 display: flex;
@@ -504,7 +550,7 @@
                 gap: 2px;
             }
             .mission-leaderboard-header, .mission-leaderboard-list > div, .mission-leaderboard-pages > div {
-                background-color:rgb(54, 54, 54);
+                background-color:var(--bg-inner);
                 padding: 5px 5px;
             }
             .mission-leaderboard-header {
@@ -536,13 +582,17 @@
                 justify-content: space-between;
                 padding-bottom: 4px;
             }
-            .mission-leaderboard-info > div:last-child {
+            .mission-leaderboard-info > div:nth-child(2) {
                 text-decoration: underline;
+            }
+            .mission-leaderboard-info > div:last-child {
+                color: rgb(170, 170, 170);
             }
             .mission-leaderboard-players {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 4px;
+                color: rgb(220, 220, 220);
             }
             .mission-leaderboard-players > div {
                 background-color: rgb(86, 86, 86);
@@ -699,13 +749,26 @@
                     <div class="create-mission">
                         <div class="create-mission-settings">
                             <div class="create-mission-buttons">
-                                <div class="mission-select-solo">Solo</div>
-                                <div class="mission-select-coop active">Coop</div>
+                                <div class="radio-buttons">
+                                    <div class="mission-select-solo">Solo</div>
+                                    <div class="mission-select-coop active">Coop</div>
+                                </div>
                                 <div class="mission-button-play">Host</div>
                             </div>
-                            <div class="create-mission-settings-coop">
+                            <div class="mission-hosting">
                                 <input class="input-inner" type="text" placeholder="Game Title (Required)">
                                 <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+                            </div>
+                           <div class="mission-difficulty radio-buttons">
+                                <div>Easy</div>
+                                <div>Medium</div>
+                                <div class="active">Hard</div>
+                            </div>
+                            <div class="mission-expansion">
+                                <label class="mission-expansion-label"><input type="checkbox" checked>Map auto-expands if player is too slow</label>
+                            </div>
+                            <div class="mission-warning">
+                                Game will count towards leaderboard.
                             </div>
                         </div>
                         <div class="mission-desc">
@@ -722,6 +785,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                                 <div class="mission-leaderboard-info">
                                     <div>30:15</div>
                                     <div>Replay</div>
+                                    <div>06-11-2021</div>
                                 </div>
                                 <div class="mission-leaderboard-players">
                                     <div>Greg</div>
@@ -730,8 +794,9 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             </div>
                             <div class="mission-leaderboard-entry">
                                 <div class="mission-leaderboard-info">
-                                    <div>25:09</div>
+                                    <div>35:09</div>
                                     <div>Replay</div>
+                                    <div>20-09-2020</div>
                                 </div>
                                 <div class="mission-leaderboard-players">
                                     <div>Greg</div>
@@ -953,14 +1018,14 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     // create campaign game
                     const playOrHost = $(".mission-button-play");
                     const coopSwitch = $(".mission-select-solo, .mission-select-coop");
-                    const coopSettings = $(".create-mission-settings-coop");
-                    const coopSettingsTitle = coopSettings.children().eq(0);
-                    const coopSettingsPassword = coopSettings.children().eq(1);
+                    const coopSettings = $(".mission-hosting > input[type=text]");
+                    const coopSettingsTitle = coopSettings.eq(0);
+                    const coopSettingsPassword = coopSettings.eq(1);
                     coopSwitch.on("click", function(e) {
                         coopSwitch.toggleClass("active");
                         const element = $(this);
                         const isSolo = !element.hasClass("mission-select-coop");
-                        coopSettings.children().prop("disabled", isSolo);
+                        coopSettings.prop("disabled", isSolo);
                         if (isSolo) {
                             coopSettingsTitle.val("Katharsas's game");
                             playOrHost.text("Play");
@@ -971,6 +1036,24 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     });
                     if (preNavigate) {
                         coopSwitch.eq(0).click();
+                    }
+                } {
+                    const difficultySwitch = $(".mission-difficulty > div");
+                    const timedExpansion = $(".mission-expansion-label > input");
+                    const warning = $(".mission-warning");
+                    difficultySwitch.on("click", function(e) {
+                        difficultySwitch.removeClass("active");
+                        const element = $(this);
+                        element.addClass("active");
+                        updateWarning();
+                    });
+                    timedExpansion.on("change", function(e) {
+                        updateWarning();
+                    });
+                    function updateWarning() {
+                        const isHard = difficultySwitch.eq(2).hasClass("active");
+                        const isExpansion = timedExpansion.is(":checked");
+                        warning.toggle(isHard && isExpansion);
                     }
                 }
             });

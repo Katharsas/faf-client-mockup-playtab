@@ -853,20 +853,21 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
         </div>
         <script>
             $(document).ready(() => {
+                const preNavigate = false; // debug flag
                 {
                     // games list
-                    var options = $(".dropdown-gametypes .dropdown-options");
-                    var text = $(".dropdown-gametypes .dropdown-text");
+                    const options = $(".dropdown-gametypes .dropdown-options");
+                    const text = $(".dropdown-gametypes .dropdown-text");
                     text.on("click", function(e) {
                         options.toggle();
                     });
                 } {
                     // mode selection
-                    var list = $(".list");
-                    var listOptions = $(".list-options");
+                    const list = $(".list");
+                    const listOptions = $(".list-options");
                     
-                    var modes = ["tmm", "custom", "campaigns", "survival", "skirmish"];
-                    var elements = [];
+                    const modes = ["tmm", "custom", "campaigns", "survival", "skirmish"];
+                    let elements = [];
                     for (let mode of modes) {
                         let button = $(".select-" + mode);
                         let detail = $("." + mode);
@@ -891,17 +892,19 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         list.css("grid-column-start", "2");
                         listOptions.css("grid-column-start", "2");
                     }
-                    elements[2].button.click();
+                    if (preNavigate) {
+                        elements[2].button.click();
+                    }
                 } {
                     // campaigns
-                    var container = $(".campaigns");
-                    var campaigns = $(".campaign");
-                    var selects = campaigns.find(".campaign-select");
-                    var contents = campaigns.find(".campaign-content");
+                    const container = $(".campaigns");
+                    const campaigns = $(".campaign");
+                    const selects = campaigns.find(".campaign-select");
+                    const contents = campaigns.find(".campaign-content");
                     selects.on("click", function(e) {
-                        var element = $(this);
-                        var isActive = element.hasClass("active");
-                        var campaign = element.closest(".campaign");
+                        const element = $(this);
+                        const isActive = element.hasClass("active");
+                        const campaign = element.closest(".campaign");
                         reset();
                         if (!isActive) {
                             selects.addClass("inactive");
@@ -921,12 +924,12 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         resetMissions();
                     }
 
-                    var missionSelects = $(".campaign-missions").children();
-                    var create = $(".campaign-mission");
+                    const missionSelects = $(".campaign-missions").children();
+                    const create = $(".campaign-mission");
                     missionSelects.on("click", function(e) {
-                        var element = $(this);
-                        var isActive = element.hasClass("active");
-                        var campaign = element.closest(".campaign");
+                        const element = $(this);
+                        const isActive = element.hasClass("active");
+                        const campaign = element.closest(".campaign");
                         resetMissions();
                         if (!isActive) {
                             element.addClass("active");
@@ -942,16 +945,21 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         create.hide();
                         container.removeClass("single");
                     }
-
-                    var playOrHost = $(".mission-button-play");
-                    var coopSwitch = $(".mission-select-solo, .mission-select-coop");
-                    var coopSettings = $(".create-mission-settings-coop");
-                    var coopSettingsTitle = coopSettings.children().eq(0);
-                    var coopSettingsPassword = coopSettings.children().eq(1);
+                    if (preNavigate) {
+                        selects.get(0).click();
+                        missionSelects.get(1).click();
+                    }
+                } {
+                    // create campaign game
+                    const playOrHost = $(".mission-button-play");
+                    const coopSwitch = $(".mission-select-solo, .mission-select-coop");
+                    const coopSettings = $(".create-mission-settings-coop");
+                    const coopSettingsTitle = coopSettings.children().eq(0);
+                    const coopSettingsPassword = coopSettings.children().eq(1);
                     coopSwitch.on("click", function(e) {
                         coopSwitch.toggleClass("active");
-                        var element = $(this);
-                        var isSolo = !element.hasClass("mission-select-coop");
+                        const element = $(this);
+                        const isSolo = !element.hasClass("mission-select-coop");
                         coopSettings.children().prop("disabled", isSolo);
                         if (isSolo) {
                             coopSettingsTitle.val("Katharsas's game");
@@ -961,10 +969,9 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             playOrHost.text("Host");
                         }
                     });
-                    coopSwitch.eq(0).click();
-
-                    // selects.get(0).click();
-                    // missionSelects.get(1).click();
+                    if (preNavigate) {
+                        coopSwitch.eq(0).click();
+                    }
                 }
             });
             

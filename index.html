@@ -31,7 +31,7 @@
                 position: relative;
                 bottom: .10em;
                 margin-right: 6px;
-                background-color: var(--border-active);;
+                background-color: var(--border-active);
             }
             input[type=text] {
                 color: inherit;
@@ -366,10 +366,32 @@
             .campaigns {
                 display: flex;
                 flex-direction: column;
-                gap: 14px;
-                padding: 6px;
             }
-            .campaigns.single {
+            .campaigns-container {
+                display: flex;
+                gap: 6px;
+            }
+            .button-show-campaigns {
+                padding: 15px 9px 16px 8px;
+                font-size: 2.5em;
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: 1px solid rgb(85, 85, 85);
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .button-show-campaigns:hover {
+                background-color: rgb(74, 74, 74);
+            }
+            .campaign-list {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .campaign-list.single {
                 gap: 0px;
             }
             .campaign-group {
@@ -657,90 +679,95 @@
                 TODO
             </div>
             <div class="campaigns" style="display: none">
-                <div class="campaign-group">
-                    <div class="campaign">
-                        <div class="campaign-select">
-                            <div class="campaign-name">
-                                <div>Supreme Commander</div>
-                                <div>UEF</div>
+                <div class="campaigns-container">
+                    <div class="button-show-campaigns" style="display: none;">❮</div>
+                    <div class="campaign-list">
+                        <div class="campaign-group">
+                            <div class="campaign">
+                                <div class="campaign-select">
+                                    <div class="campaign-name">
+                                        <div>Supreme Commander</div>
+                                        <div>UEF</div>
+                                    </div>
+                                    <div class="campaign-desc">
+                                        For beginners. Slowly get familiar with the UEF arsenal.
+                                    </div>
+                                </div>
+                                <div class="campaign-content" style="display: none;">
+                                    <div class="campaign-missions">
+                                        <div>Mission 1 - Black Earth</div>
+                                        <div>Mission 2 - Snow Blind</div>
+                                        <div>Mission 3 - Metal Shark</div>
+                                        <div>Mission 4 - Vaccine</div>
+                                        <div>Mission 5 - Forge</div>
+                                        <div>Mission 6 - Stone Wall</div>
+                                    </div>
+                                    <!-- <div class="mission-spacer"></div> -->
+                                    <div class="mission-status"></div>
+                                </div>
                             </div>
-                            <div class="campaign-desc">
-                                For beginners. Slowly get familiar with the UEF arsenal.
+                            <div class="campaign">
+                                <div class="campaign-select">
+                                    <div class="campaign-name">
+                                        <div>Supreme Commander</div>
+                                        <div>Cybran</div>
+                                    </div>
+                                    <div class="campaign-desc">
+                                        For beginners. Expand your knowledge about other factions.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campaign">
+                                <div class="campaign-select">
+                                    <div class="campaign-name">
+                                        <div>Supreme Commander</div>
+                                        <div>Aeon</div>
+                                    </div>
+                                    <div class="campaign-desc">
+                                        Updated Aeon mission with higher difficulty than in the base game.
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="campaign-content" style="display: none;">
-                            <div class="campaign-missions">
-                                <div>Mission 1 - Black Earth</div>
-                                <div>Mission 2 - Snow Blind</div>
-                                <div>Mission 3 - Metal Shark</div>
-                                <div>Mission 4 - Vaccine</div>
-                                <div>Mission 5 - Forge</div>
-                                <div>Mission 6 - Stone Wall</div>
+                        <div class="campaign">
+                            <div class="campaign-select">
+                                <div class="campaign-name">Supreme Commander: Forged Alliance</div>
+                                <div class="campaign-desc">
+                                    The ultimate campaign experience.
+                                </div>
                             </div>
-                            <!-- <div class="mission-spacer"></div> -->
-                            <div class="mission-status"></div>
-                        </div>
-                    </div>
-                    <div class="campaign">
-                        <div class="campaign-select">
-                            <div class="campaign-name">
-                                <div>Supreme Commander</div>
-                                <div>Cybran</div>
-                            </div>
-                            <div class="campaign-desc">
-                                For beginners. Expand your knowledge about other factions.
+                            <div class="campaign-content" style="display: none;">
+                                <div class="campaign-missions">
+                                    <div>Mission 1 - Black Day</div>
+                                    <div>Mission 2 - Dawn</div>
+                                    <div>Mission 3 - Red Flag</div>
+                                    <div>Mission 4 - Meltdown</div>
+                                    <div>Mission 5 - Mind Games</div>
+                                    <div>Mission 6 - Overlord</div>
+                                </div>
+                                <div class="mission-status"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="campaign">
-                        <div class="campaign-select">
-                            <div class="campaign-name">
-                                <div>Supreme Commander</div>
-                                <div>Aeon</div>
+                        <div class="campaign">
+                            <div class="campaign-select">
+                                <div class="campaign-name">
+                                    <div>FAF</div>
+                                    <div>Serpahim</div>
+                                </div>
+                                <div class="campaign-desc">
+                                    Work in progress. An entire new campaign with high difficulty.
+                                </div>
                             </div>
-                            <div class="campaign-desc">
-                                Updated Aeon mission with higher difficulty than in the base game.
+                        </div>
+                        <div class="campaign">
+                            <div class="campaign-select">
+                                <div class="campaign-name">
+                                    <div>FAF Custom Missions</div>
+                                </div>
+                                <div class="campaign-desc">
+                                    Additional fan-made stand-alone missions.
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="campaign">
-                    <div class="campaign-select">
-                        <div class="campaign-name">Supreme Commander: Forged Alliance</div>
-                        <div class="campaign-desc">
-                            The ultimate campaign experience.
-                        </div>
-                    </div>
-                    <div class="campaign-content" style="display: none;">
-                        <div class="campaign-missions">
-                            <div>Mission 1 - Black Day</div>
-                            <div>Mission 2 - Dawn</div>
-                            <div>Mission 3 - Red Flag</div>
-                            <div>Mission 4 - Meltdown</div>
-                            <div>Mission 5 - Mind Games</div>
-                            <div>Mission 6 - Overlord</div>
-                        </div>
-                        <div class="mission-status"></div>
-                    </div>
-                </div>
-                <div class="campaign">
-                    <div class="campaign-select">
-                        <div class="campaign-name">
-                            <div>FAF</div>
-                            <div>Serpahim</div>
-                        </div>
-                        <div class="campaign-desc">
-                            Work in progress. An entire new campaign with high difficulty.
-                        </div>
-                    </div>
-                </div>
-                <div class="campaign">
-                    <div class="campaign-select">
-                        <div class="campaign-name">
-                            <div>FAF Custom Missions</div>
-                        </div>
-                        <div class="campaign-desc">
-                            Additional fan-made  stand-alone missions.
                         </div>
                     </div>
                 </div>
@@ -759,7 +786,7 @@
                                 <input class="input-inner" type="text" placeholder="Game Title (Required)">
                                 <input class="input-inner" type="text" placeholder="Game Password (Optional)">
                             </div>
-                           <div class="mission-difficulty radio-buttons">
+                        <div class="mission-difficulty radio-buttons">
                                 <div>Easy</div>
                                 <div>Medium</div>
                                 <div class="active">Hard</div>
@@ -962,7 +989,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     }
                 } {
                     // campaigns
-                    const container = $(".campaigns");
+                    const container = $(".campaign-list");
                     const campaigns = $(".campaign");
                     const selects = campaigns.find(".campaign-select");
                     const contents = campaigns.find(".campaign-content");
@@ -990,6 +1017,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     }
 
                     const missionSelects = $(".campaign-missions").children();
+                    const back = $(".button-show-campaigns");
                     const create = $(".campaign-mission");
                     missionSelects.on("click", function(e) {
                         const element = $(this);
@@ -1002,13 +1030,18 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             campaign.show();
                             create.show();
                             container.addClass("single");
+                            back.show();
                         }
+                    });
+                    back.on("click", function(e) {
+                        resetMissions();
                     });
                     function resetMissions() {
                         missionSelects.removeClass("active");
                         campaigns.show();
                         create.hide();
                         container.removeClass("single");
+                        back.hide();
                     }
                     if (preNavigate) {
                         selects.get(0).click();

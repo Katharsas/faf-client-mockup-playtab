@@ -9,7 +9,6 @@
                 --border-radius: 6px;
                 --border-radius-inner: 5px;
                 --bg-default: rgb(36, 36, 36);
-                --bg-inner: rgb(54, 54, 54);
                 --top-row-height: 35px;
                 --inactive-row-heigh: 35px;
 
@@ -20,8 +19,24 @@
                 --hover-top-shadow-3d-blue: inset 0px 2px 2px -1px rgb(46, 83, 143);
 
                 --text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+                --text-shadow-2: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff;
                 
-                --radio-buttons-bg: rgb(98, 98, 98);
+                --bg-inner: rgb(54, 54, 54);
+                --group-border: 1px solid rgb(67, 67, 67);
+                --group-button-border: 1px solid rgb(87, 87, 87);
+
+                --button-default-bg: rgb(73, 73, 73);
+                --button-default-border: 1px solid rgb(97, 97, 97);
+                --button-default-shadow: 0px 2px 2px 0px var(--bg-default);
+                --button-default-light: inset 0px 1px 0px -0px rgb(118, 118, 118);
+
+                --button-default-bg-hover: rgb(86, 86, 86);
+                --button-default-border-hover: rgb(139, 139, 139);
+
+                --button-primary-bg: rgb(224, 224, 224);
+                --button-primary-border: 1px solid rgb(175, 174, 174);
+                --button-primary-light: inset 0px 1px 1px 0px rgb(255, 255, 255);
+                --button-primary-bg-hover: rgb(250, 250, 250);
             }
             * {
                 box-sizing: border-box;
@@ -36,53 +51,6 @@
             input[type=text] {
                 color: inherit;
                 background-color: inherit;
-                border-radius: var(--border-radius-inner);
-                padding: 5px;
-            }
-            .input-inner {
-                background-color: rgb(37, 37, 37);
-                border-color: rgb(86, 86, 86);
-            }
-            .input-inner:disabled {
-                background-color: rgb(49, 49, 49);
-                color: rgb(128, 128, 128);
-            }
-            input:disabled::placeholder {
-                color: rgb(84, 84, 84);
-                opacity: 1;
-            }
-            .radio-buttons {
-                display: flex;
-                gap: 1px;
-                text-align: center;
-
-                /* TODO this should be a box-shadow, and all button-likes should have it */
-                background: var(--bg-default);
-                border-bottom: 2px solid var(--bg-default);
-                border-radius: 7px;
-            }
-            .radio-buttons > div {
-                background-color: rgb(73, 73, 73);
-                border: 1px solid rgb(103, 103, 103);
-                border-left-style: none;
-                border-right-style: none;
-            }
-            .radio-buttons > div:hover {
-                background-color: rgb(103, 103, 103);
-            }
-            .radio-buttons > div.active {
-                background-color: var(--border-active);
-                border-color: var(--border-active);
-            }
-            .radio-buttons > div:first-child {
-                border-top-left-radius: var(--border-radius-inner);
-                border-bottom-left-radius: var(--border-radius-inner);
-                border-left-style: solid;
-            }
-            .radio-buttons > div:last-child {
-                border-top-right-radius: var(--border-radius-inner);
-                border-bottom-right-radius: var(--border-radius-inner);
-                border-right-style: solid;
             }
             body {
                 background-color: black;
@@ -130,6 +98,102 @@
             .dropdown-option {
                 display: inline-block;
                 padding: 3px 0px;
+            }
+
+            /*
+             * COMMON INNER ELEMENTS
+             */
+            .group {
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: var(--group-border);
+            }
+            .group-button {
+                cursor: pointer;
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: var(--group-button-border);
+            }
+            .group-button:hover {
+                background-color: rgb(74, 74, 74);
+            }
+            .button {
+                cursor: pointer;
+                text-align: center;
+                background-color: var(--button-default-bg);
+                border: var(--button-default-border);
+                border-radius: var(--border-radius-inner);
+                box-shadow: var(--button-default-shadow), var(--button-default-light);
+            }
+            .button-primary {
+                color: rgb(0, 0, 0);
+                font-weight: 600;
+                background-color: var(--button-primary-bg);
+                border: var(--button-primary-border);
+                border-radius: var(--border-radius-inner);
+                box-shadow: var(--button-default-shadow), var(--button-primary-light);
+            }
+            .button-primary:hover {
+                background-color: var(--button-primary-bg-hover);
+                border-color: var(--button-primary-bg-hover);
+            }
+            .radio-buttons {
+                display: flex;
+                gap: 1.4px;
+                text-align: center;
+
+                background: var(--bg-default);
+                border-radius: 7px;
+                box-shadow: var(--button-default-shadow);
+            }
+            .radio-buttons > div {
+                cursor: pointer;
+                background-color: var(--button-default-bg);
+                border: var(--button-default-border);
+                border-left-color: var(--button-default-bg);
+                border-right-color: var(--button-default-bg);
+                box-shadow: var(--button-default-light);
+            }
+            .radio-buttons > div:first-child {
+                border-top-left-radius: var(--border-radius-inner);
+                border-bottom-left-radius: var(--border-radius-inner);
+                border-left: var(--button-default-border);
+            }
+            .radio-buttons > div:last-child {
+                border-top-right-radius: var(--border-radius-inner);
+                border-bottom-right-radius: var(--border-radius-inner);
+                border-right: var(--button-default-border);
+            }
+            .radio-buttons > div:hover {
+                background-color: var(--button-default-bg-hover);
+                border: 1px solid var(--button-default-border-hover);
+            }
+            .radio-buttons > div.active {
+                background-color: var(--border-active);
+                border: 1px solid var(--border-active);
+            }
+            .input-inner[type=text] {
+                border-radius: var(--border-radius-inner);
+                padding: 5px;
+            }
+            .input-inner {
+                background-color: rgb(37, 37, 37);
+                border-color: rgb(86, 86, 86);
+            }
+            .input-inner:disabled {
+                background-color: rgb(49, 49, 49);
+                color: rgb(165, 165, 165);
+            }
+            .input-inner:disabled::placeholder {
+                color: rgb(84, 84, 84);
+                opacity: 1;
+            }
+            .check {
+                cursor: pointer;
+                border-radius: var(--border-radius-inner);
+            }
+            .check:hover {
+                text-shadow: var(--text-shadow-2);
             }
 
             /*
@@ -377,16 +441,10 @@
             .button-show-campaigns {
                 padding: 15px 9px 16px 8px;
                 font-size: 2.5em;
-                background-color: var(--bg-inner);
-                border-radius: var(--border-radius-inner);
-                border: 1px solid rgb(85, 85, 85);
 
                 display: flex;
                 justify-content: center;
                 align-items: center;
-            }
-            .button-show-campaigns:hover {
-                background-color: rgb(74, 74, 74);
             }
             .campaign-list {
                 flex-grow: 1;
@@ -491,12 +549,9 @@
                 align-items: stretch;
                 gap: 16px;
             }
-            .mission-leaderboard, .create-mission-settings, .mission-desc {
+            .mission-leaderboard {
                 border-radius: var(--border-radius-inner);
                 overflow: hidden;
-            }
-            .create-mission-settings, .mission-desc {
-                background-color:var(--bg-inner);
             }
             .create-mission {
                 flex-grow: 1;
@@ -518,22 +573,13 @@
                 min-width: 70px;
             }
             .mission-button-play {
-                padding: 7px 12px;
-                min-width: 70px;
-                text-align: center;
-            }
-            .mission-button-play {
                 margin-left: auto;
-                background-color: rgb(219, 219, 219);
-                border-radius: var(--border-radius-inner);
-                color:rgb(0, 0, 0);
-                font-weight: 500;
-
-                transition: transform 0.1s;
+                padding: 6px 12px;
+                min-width: 70px;
+                transition: transform 0.05s;
             }
             .mission-button-play:hover {
-                background-color: rgb(250, 250, 250);
-                transform: scale(1.025);
+                transform: scale(1.015);
             }
             .mission-hosting > input {
                 width: 100%;
@@ -629,7 +675,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="button-free button-back" style="display:none">Back</div>
+            <!-- <div class="button-free button-back" style="display:none">Back</div> -->
             <div class="select select-pvp">
                 <div class="select-descr select-pvp-descr">
                     PvP
@@ -676,7 +722,7 @@
                         <div class="tmm-message-author">Katharsas:</div>
                         <div class="tmm-message-text">Everybody ready?</div>
                     </div>
-                    <input class="tmm-chat-input" type="text" placeholder="Type a message...">
+                    <input class="input-inner tmm-chat-input" type="text" placeholder="Type a message...">
                 </div>
             </div>
             <div class="custom" style="display: none">
@@ -684,7 +730,7 @@
             </div>
             <div class="campaigns" style="display: none">
                 <div class="campaigns-container">
-                    <div class="button-show-campaigns" style="display: none;">❮</div>
+                    <div class="group-button button-show-campaigns" style="display: none;">❮</div>
                     <div class="campaign-list">
                         <div class="campaign-group">
                             <div class="campaign">
@@ -778,31 +824,31 @@
                 <div class="campaign-mission" style="display: none">
                     <!-- Create game / show leaderboards. -->
                     <div class="create-mission">
-                        <div class="create-mission-settings">
+                        <div class="group create-mission-settings">
                             <div class="create-mission-buttons">
                                 <div class="radio-buttons">
                                     <div class="mission-select-solo">Solo</div>
                                     <div class="mission-select-coop active">Coop</div>
                                 </div>
-                                <div class="mission-button-play">Host</div>
+                                <div class="button button-primary mission-button-play">Host</div>
                             </div>
                             <div class="mission-hosting">
                                 <input class="input-inner" type="text" placeholder="Game Title (Required)">
                                 <input class="input-inner" type="text" placeholder="Game Password (Optional)">
                             </div>
-                        <div class="mission-difficulty radio-buttons">
+                            <div class="mission-difficulty radio-buttons">
                                 <div>Easy</div>
                                 <div>Medium</div>
                                 <div class="active">Hard</div>
                             </div>
                             <div class="mission-expansion">
-                                <label class="mission-expansion-label"><input type="checkbox" checked>Map auto-expands if player is too slow</label>
+                                <label class="check mission-expansion-label"><input type="checkbox" checked>Map auto-expands if player is too slow</label>
                             </div>
                             <div class="mission-warning">
                                 Game will count towards leaderboard.
                             </div>
                         </div>
-                        <div class="mission-desc">
+                        <div class="group mission-desc">
                             Fort Clarke, located on the planet Griffin IV, is the UEF's last stronghold.
 Seraphim and Order forces are attacking the fort with overwhelming force. 
 If Fort Clarke falls, the UEF is finished. 
@@ -856,12 +902,12 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                 <div class="dropdown dropdown-gametypes">
                     <div class="dropdown-text">Game Types</div>
                     <div class="dropdown-options" style="display:none">
-                        <label class="dropdown-option"><input type="checkbox" checked>PvP Rated</label>
-                        <label class="dropdown-option"><input type="checkbox">PvP Survival</label>
-                        <label class="dropdown-option"><input type="checkbox" checked>PvP Other</label>
-                        <label class="dropdown-option"><input type="checkbox" checked>Coop Skirmish</label>
-                        <label class="dropdown-option"><input type="checkbox" checked>Coop Survival</label>
-                        <label class="dropdown-option"><input type="checkbox" checked>Coop Campaign</label>
+                        <label class="dropdown-option check"><input type="checkbox" checked>PvP Rated</label>
+                        <label class="dropdown-option check"><input type="checkbox">PvP Survival</label>
+                        <label class="dropdown-option check"><input type="checkbox" checked>PvP Other</label>
+                        <label class="dropdown-option check"><input type="checkbox" checked>Coop Skirmish</label>
+                        <label class="dropdown-option check"><input type="checkbox" checked>Coop Survival</label>
+                        <label class="dropdown-option check"><input type="checkbox" checked>Coop Campaign</label>
                     </div>
                 </div>
             </div>

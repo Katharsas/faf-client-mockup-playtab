@@ -43,6 +43,8 @@
 
                 --text-small-size: 12.48px;
                 --text-grey-color: rgb(150, 150, 150);
+
+                --scrollhandle-default-bg: #c2c2c2;
             }
             * {
                 box-sizing: border-box;
@@ -131,6 +133,15 @@
                 border: var(--button-default-border);
                 border-radius: var(--border-radius-inner);
                 box-shadow: var(--button-default-shadow), var(--button-default-light);
+            }
+            .button:hover {
+                background-color: var(--button-default-bg-hover);
+                border: 1px solid var(--button-default-border-hover);
+            }
+            .button.disabled, .button.disabled:hover {
+                background-color: inherit;
+                border: var(--button-default-border);
+                box-shadow: none;
             }
             .button-primary {
                 color: rgb(0, 0, 0);
@@ -687,6 +698,122 @@
                 border-radius: var(--border-radius-inner);
                 padding: 1px 4px;
             }
+
+            /*
+             * SKIRMISH
+             */
+            .skirmish > .create-mission {
+                height: 100%;
+            }
+            .game-ais {
+                display: flex;
+                gap: 8px;
+                min-height: 0;
+            }
+            .game-ais-list {
+                flex-basis: 50%;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            .game-ais-list-head {
+                text-align: center;
+                padding-top: 5px;
+                padding-right: 15px; /*offset scrollbar*/
+            }
+            .game-ais-list-body {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding-right: 5px;
+
+                /* Firefox */
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: var(--scrollhandle-default-bg) var(--bg-default);
+            }
+            .game-ais-list-body::-webkit-scrollbar {
+                width: 9px;
+            }
+            .game-ais-list-body::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .game-ais-list-body::-webkit-scrollbar-thumb {
+                background-color: var(--scrollhandle-default-bg);
+                border-radius: 20px;
+                border: transparent;
+            }
+            .game-ai {
+                /* min-height: 0; */
+                background-color: inherit;
+                display: flex;
+                gap: 2px;
+                /* align-items: flex-start; */
+                /* overflow: hidden; */
+                
+                border-radius: 7px;
+            }
+            .game-ai.active {
+                /* border: 2px solid blue; */
+                border: var(--border-default);
+                border-color: var(--border-active);
+                
+            }
+            .game-ai-general {
+                background-color:var(--bg-inner);
+                padding: 5px 5px;
+                /* flex-grow: 0; */
+                /* align-items: flex-end; */
+                display: flex;
+                flex-direction: column;
+                
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: var(--group-border);
+            }
+            .game-ai-has-variants > .game-ai-general {
+                border-top-right-radius: unset;
+                border-bottom-right-radius: unset;
+            }
+            .game-ai-desc {
+                flex-grow: 1;
+                margin-top: 4px;
+                font-size: var(--text-small-size);
+                /* color: var(--text-grey-color); */
+            }
+            .game-ai-install {
+                margin-top: 6px;
+                padding: 2px 2px;
+                width: 130px;
+                /* align-self: center; */
+            }
+            .game-ai-variants {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                flex-grow: 1;
+
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: var(--group-border);
+                border-top-left-radius: unset;
+                border-bottom-left-radius: unset;
+            }
+            .game-ai-variants > div {
+                /* background-color:var(--bg-inner); */
+                padding: 3px 12px;
+                /* padding-right: 17px; */
+                text-align: center;
+                /* border-left: var(--border-default);
+                border-right: var(--border-default); */
+            }
+            /* .game-ai-variants > div:hover {
+                border-color: var(--border-active);
+                background-color: rgb(37, 37, 37);
+            }
+            .game-ai-variants > div.active {
+                background-color: var(--border-active);
+            } */
         </style>
     </head>
     <body>
@@ -933,7 +1060,100 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                 TODO
             </div>
             <div class="skirmish" style="display: none">
-                TODO
+                <!-- TODO -->
+                <div class="create-mission">
+                    <div class="group create-mission-settings">
+                        <div class="create-mission-buttons">
+                            <div class="radio-buttons">
+                                <div class="mission-select-solo">Solo</div>
+                                <div class="mission-select-coop active">Coop</div>
+                            </div>
+                            <div class="button button-primary mission-button-play">Host</div>
+                        </div>
+                        <div class="mission-hosting">
+                            <input class="input-inner" type="text" placeholder="Game Title (Required)">
+                            <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+                        </div>
+                    </div>
+                    <div class="game-ais">
+                        <div class="game-ais-list">
+                            <div class="game-ais-list-head">Installed AIs</div>
+                            <div class="game-ais-list-body">
+                                <div class="game-ai game-ai-has-variants active">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-name">Standard AI / AIx</div>
+                                        <div class="game-ai-desc">
+                                            Outdated but provides many variants.<br><br>"AIx" is the cheating version with multipliers that can be adjusted in the lobby settings.</div>
+                                        <div class="game-ai-install game-ai-builtin button disabled">Built-In</div>
+                                    </div>
+                                    <div class="game-ai-variants">
+                                        <div class="game-ai-variant">
+                                            Easy
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Normal
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Adaptive
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Rush
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Turtle
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Tech
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="game-ai game-ai-has-variants">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-name">Sorian AI</div>
+                                        <div class="game-ai-desc">Outdated but provides many variants. No longer updated for FAF.</div>
+                                        <div class="game-ai-install button">Remove</div>
+                                    </div>
+                                    <div class="game-ai-variants">
+                                        <div class="game-ai-variant">
+                                            Rush
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Air
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Water
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Turtle
+                                        </div>
+                                        <div class="game-ai-variant">
+                                            Adaptive
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-ais-list game-ais-recommended">
+                            <div class="game-ais-list-head">Recommended AIs</div>
+                            <div class="game-ais-list-body">
+                                <div class="game-ai">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-name">M27 AI</div>
+                                        <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF. Estimated PvP rank of 800-1100.</div>
+                                        <div class="game-ai-install button">Download</div>
+                                    </div>
+                                </div>
+                                <div class="game-ai">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-name">M28 AI</div>
+                                        <div class="game-ai-desc">Less strong than M27 AI currently, but much better performance (reduced CPU load).</div>
+                                        <div class="game-ai-install button">Download</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="list-options">
                 <div class="dropdown dropdown-gametypes">

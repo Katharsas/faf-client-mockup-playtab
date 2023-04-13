@@ -40,6 +40,9 @@
                 --button-primary-border: 1px solid rgb(175, 174, 174);
                 --button-primary-light: inset 0px 1px 1px 0px rgb(255, 255, 255);
                 --button-primary-bg-hover: rgb(250, 250, 250);
+
+                --text-small-size: 12.48px;
+                --text-grey-color: rgb(150, 150, 150);
             }
             * {
                 box-sizing: border-box;
@@ -503,8 +506,8 @@
             }
             .campaign-desc {
                 margin-top: 4px;
-                font-size: 0.65em;
-                color:rgb(150, 150, 150);
+                font-size: var(--text-small-size);
+                color: var(--text-grey-color);
             }
             .campaign-content {
                 display: flex;
@@ -1029,7 +1032,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
         </div>
         <script>
             $(document).ready(() => {
-                const preNavigate = "survival"; // debug flag
+                const preNavigate = "skirmish"; // debug flag
                 {
                     // games list
                     const options = $(".dropdown-gametypes .dropdown-options");
@@ -1070,7 +1073,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     }
                     modes.forEach(function (value, i) {
                         if (preNavigate === value) {
-                            elements[i + 1].button.click();
+                            elements[i].button.click();
                         }
                     });
                 } {

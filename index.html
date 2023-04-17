@@ -22,8 +22,11 @@
                 --text-shadow-2: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff;
                 
                 --bg-inner: rgb(54, 54, 54);
-                --group-border: 1px solid rgb(67, 67, 67);
+                --group-border: 1px solid rgb(71, 71, 71);
                 --group-button-border: 1px solid rgb(87, 87, 87);
+
+                --group-button-bg-hover: rgb(74, 74, 74);
+                --group-button-border-hover: rgb(105, 105, 105);
 
                 --button-default-bg: rgb(73, 73, 73);
                 --button-default-border: 1px solid rgb(97, 97, 97);
@@ -115,7 +118,8 @@
                 border: var(--group-button-border);
             }
             .group-button:hover {
-                background-color: rgb(74, 74, 74);
+                background-color: var(--group-button-bg-hover);
+                border-color: var(--group-button-border-hover);
             }
             .button {
                 cursor: pointer;
@@ -549,10 +553,6 @@
                 align-items: stretch;
                 gap: 16px;
             }
-            .mission-leaderboard {
-                border-radius: var(--border-radius-inner);
-                overflow: hidden;
-            }
             .create-mission {
                 flex-grow: 1;
                 display: flex;
@@ -619,20 +619,23 @@
                 min-width: 200px;
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                gap: 3px;
             }
             .mission-leaderboard-header, .mission-leaderboard-list > div, .mission-leaderboard-pages > div {
-                background-color:var(--bg-inner);
+                background-color: var(--bg-inner);
+                border: var(--group-border);
                 padding: 5px 5px;
             }
             .mission-leaderboard-header {
                 text-align: center;
+                border-top-right-radius: var(--border-radius-inner);
+                border-top-left-radius: var(--border-radius-inner);
             }
             .mission-leaderboard-list {
                 flex-grow: 1;
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                gap: 3px;
             }
             .mission-leaderboard-list > div:last-child {
                 flex-grow: 1;
@@ -641,13 +644,22 @@
                 display: flex;
                 justify-content: space-between;
                 text-align: center;
-                gap: 2px;
+                gap: 3px;
             }
             .mission-leaderboard-pages > div {
                 flex-grow: 1;
+                cursor: pointer;
+                border: var(--group-button-border);
+            }
+            .mission-leaderboard-pages > div:first-child {
+                border-bottom-left-radius: var(--border-radius-inner);
+            }
+            .mission-leaderboard-pages > div:last-child {
+                border-bottom-right-radius: var(--border-radius-inner);
             }
             .mission-leaderboard-pages > div:hover {
-                background-color: rgb(75, 75, 75);
+                background-color: var(--group-button-bg-hover);
+                border-color: var(--group-button-border-hover);
             }
             .mission-leaderboard-info {
                 display: flex;
@@ -656,6 +668,7 @@
             }
             .mission-leaderboard-info > div:nth-child(2) {
                 text-decoration: underline;
+                cursor: pointer;
             }
             .mission-leaderboard-info > div:last-child {
                 color: rgb(170, 170, 170);
@@ -752,7 +765,6 @@
                                         <div>Mission 5 - Forge</div>
                                         <div>Mission 6 - Stone Wall</div>
                                     </div>
-                                    <!-- <div class="mission-spacer"></div> -->
                                     <div class="mission-status"></div>
                                 </div>
                             </div>
@@ -766,6 +778,17 @@
                                         For beginners. Expand your knowledge about other factions.
                                     </div>
                                 </div>
+                                <div class="campaign-content" style="display: none;">
+                                    <div class="campaign-missions">
+                                        <div>Mission 1 - Liberation</div>
+                                        <div>Mission 2 - Artifact</div>
+                                        <div>Mission 3 - Defrag</div>
+                                        <div>Mission 4 - Mainframe Tango</div>
+                                        <div>Mission 5 - Unlock</div>
+                                        <div>Mission 6 - Freedom</div>
+                                    </div>
+                                    <div class="mission-status"></div>
+                                </div>
                             </div>
                             <div class="campaign">
                                 <div class="campaign-select">
@@ -776,6 +799,17 @@
                                     <div class="campaign-desc">
                                         Updated Aeon mission with higher difficulty than in the base game.
                                     </div>
+                                </div>
+                                <div class="campaign-content" style="display: none;">
+                                    <div class="campaign-missions">
+                                        <div>Mission 1 - Liberation</div>
+                                        <div>Mission 2 - Artifact</div>
+                                        <div>Mission 3 - Defrag</div>
+                                        <div>Mission 4 - Mainframe Tango</div>
+                                        <div>Mission 5 - Unlock</div>
+                                        <div>Mission 6 - Freedom</div>
+                                    </div>
+                                    <div class="mission-status"></div>
                                 </div>
                             </div>
                         </div>
@@ -995,7 +1029,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
         </div>
         <script>
             $(document).ready(() => {
-                const preNavigate = false; // debug flag
+                const preNavigate = "survival"; // debug flag
                 {
                     // games list
                     const options = $(".dropdown-gametypes .dropdown-options");
@@ -1034,9 +1068,11 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         list.css("grid-column-start", "2");
                         listOptions.css("grid-column-start", "2");
                     }
-                    if (preNavigate) {
-                        elements[2].button.click();
-                    }
+                    modes.forEach(function (value, i) {
+                        if (preNavigate === value) {
+                            elements[i + 1].button.click();
+                        }
+                    });
                 } {
                     // campaigns
                     const container = $(".campaign-list");
@@ -1093,7 +1129,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         container.removeClass("single");
                         back.hide();
                     }
-                    if (preNavigate) {
+                    if (preNavigate === "coop") {
                         selects.get(0).click();
                         missionSelects.get(1).click();
                     }
@@ -1117,7 +1153,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             playOrHost.text("Host");
                         }
                     });
-                    if (preNavigate) {
+                    if (preNavigate === "coop") {
                         coopSwitch.eq(0).click();
                     }
                 } {

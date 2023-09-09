@@ -691,17 +691,68 @@
             /*
              * SURVIVAL
              */
+            .game-ai {
+                background-color: inherit;
+                margin-top: 6px;
+
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            /* TODO groups having border for styling SUCKS, 
+                    we should either use shadows or differentiate clickable groups
+                    from normal groups
+            */
+            .game-ai-select {
+                padding: 6px 8px;
+                background-color: var(--bg-inner);
+            }
+            .game-ai.active {
+                border: var(--border-default);
+                border-color: var(--border-active);
+            }
+            .game-ai.active > .game-ai-select {
+                padding: 4px 6px; /* 6px + group border - default-border-size */
+            }
+            .game-ai:hover {
+                border-left-color: var(--border-active);
+                border-right-color: var(--border-active);
+                border-left-width: var(--border-default-size);
+                border-right-width: var(--border-default-size);
+            }
+            .game-ai:hover > .game-ai-select {
+                background-color: rgb(75, 75, 75);
+            }
+            /* .game-ai:hover > .game-ai-select {
+                padding: 6px 6px;
+            } */
+            /* .game-ai.active:hover {
+                background-color: inherit;
+            } */
+            .game-ai.active:hover > .game-ai-select {
+                padding: 4px 6px; /* 6px + group border - default-border-size */
+            }
             .game-ai-desc {
                 margin-top: 4px;
                 font-size: var(--text-small-size);
                 color: var(--text-grey-color);
             }
+            .game-ai-variants {
+                /* margin-top: 8px; */
+
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                flex-grow: 1;
+            }
             .game-ai-variants > div {
                 /* TODO move flex stuff to general radio-box styling */
-                flex-basis: 120px;
-                flex-grow: 1;
-                padding: 5px 10px;
+                /* flex-basis: 120px;
+                flex-grow: 1; */
+                /* padding: 5px 10px; */
+                background-color: var(--bg-inner);
             }
+            
         </style>
     </head>
     <body>
@@ -963,44 +1014,54 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             <input class="input-inner" type="text" placeholder="Game Password (Optional)">
                         </div>
                     </div>
-                    <!-- <div class="group game-ais"> -->
+                    <div class="game-ais">
                         <div class="group game-ai">
-                            <div class="game-ai-name">Standard AI</div>
-                            <div class="game-ai-desc">Outdated but provides many variants.</div>
-                            <div class="game-ai-variants radio-buttons">
-                                <div class="game-ai-variant">
-                                    Easy
-                                </div>
-                                <div class="game-ai-variant">
-                                    Adaptive
-                                </div>
-                                <div class="game-ai-variant">
-                                    Rush
-                                </div>
-                                <div class="game-ai-variant">
-                                    Hard
-                                </div>
+                            <div class="game-ai-select">
+                                <div class="game-ai-name">AI</div>
+                                <div class="game-ai-desc">Standard AI from SupCom:FA. Outdated but provides many variants.</div>
+                            </div>
+                            <div class="game-ai-details">
+                                Difficulty: Very Easy - Medium<br>
+                                <br>
+                                Game Performance Impact: Demanding<br>
+                                Use few strong/cheating AIs instead of many easier AIs to improve game performance.
+                            </div>
+                            <div class="game-ai-variants" style="display: none">
+                                <div class="game-ai-variant">Easy</div>
+                                <div class="game-ai-variant">Normal</div>
+                                <div class="game-ai-variant">Adaptive</div>
+                                <div class="game-ai-variant">Rush</div>
+                                <div class="game-ai-variant">Turtle</div>
+                                <div class="game-ai-variant">Tech</div>
+                            </div>
+                            <div class="game-ai-variant-desc">Very Easy (TODO part of variant description</div>
+                        </div>
+                        <div class="group game-ai">
+                            <div class="game-ai-select">
+                                <div class="game-ai-name">AIx</div>
+                                <div class="game-ai-desc">Standard cheating AI from SupCom:FA. Cheat multipliers can be fine-tuned.</div>
+                            </div>
+                            <div class="game-ai-variants" style="display: none">
+                                <div class="game-ai-variant">Adaptive</div>
+                                <div class="game-ai-variant">Rush</div>
+                                <div class="game-ai-variant">Turtle</div>
+                                <div class="game-ai-variant">Tech</div>
                             </div>
                         </div>
                         <div class="group game-ai">
-                            <div class="game-ai-name">Standard AI (Cheating)</div>
-                            <div class="game-ai-desc">Outdated but provides many variants.</div>
-                            <div class="game-ai-variants radio-buttons">
-                                <div class="game-ai-variant">
-                                    Easy
-                                </div>
+                            <div class="game-ai-select">
+                                <div class="game-ai-name">Sorian AI</div>
+                                <div class="game-ai-desc">Fan-made AI for SupCom:FA. Outdated but provides many variants.</div>
+                            </div>
+                            <div class="game-ai-variants" style="display: none">
+                                <div class="game-ai-variant">Default</div>
+                                <div class="game-ai-variant">Rush</div>
+                                <div class="game-ai-variant">Air</div>
+                                <div class="game-ai-variant">Water</div>
+                                <div class="game-ai-variant">Turtle</div>
+                                <div class="game-ai-variant">Adaptive</div>
                             </div>
                         </div>
-                        <div class="group game-ai">
-                            <div class="game-ai-name">Standard AI</div>
-                            <div class="game-ai-desc">Outdated but provides many variants.</div>
-                            <div class="game-ai-variants radio-buttons">
-                                <div class="game-ai-variant">
-                                    Easy
-                                </div>
-                            </div>
-                        </div>
-                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -1245,6 +1306,24 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         const isHard = difficultySwitch.eq(2).hasClass("active");
                         const isExpansion = timedExpansion.is(":checked");
                         warning.toggle(isHard && isExpansion);
+                    }
+                } {
+                    // AIs
+                    const container = $(".game-ais");
+                    const ais = container.find(".game-ai");
+                    const variants = ais.find(".game-ai-variants");
+                    ais.on("click", function(e) {
+                        const element = $(this);
+                        const isActive = element.hasClass("active");
+                        reset();
+                        if (!isActive) {
+                            element.addClass("active");
+                            element.find(".game-ai-variants").show();
+                        }
+                    });
+                    function reset() {
+                        ais.removeClass("active");
+                        variants.hide();
                     }
                 }
             });

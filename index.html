@@ -744,43 +744,74 @@
                 border: transparent;
             }
             .game-ai {
-                /* min-height: 0; */
+                border-radius: var(--border-radius-inner);
                 background-color: inherit;
                 display: flex;
                 gap: 2px;
                 /* align-items: flex-start; */
-                /* overflow: hidden; */
+                overflow: hidden;
+                /* min-height: 0; */
                 
-                border-radius: 7px;
             }
             .game-ai.active {
-                /* border: 2px solid blue; */
                 border: var(--border-default);
                 border-color: var(--border-active);
-                
             }
+
             .game-ai-general {
-                background-color:var(--bg-inner);
-                padding: 5px 5px;
                 /* flex-grow: 0; */
                 /* align-items: flex-end; */
                 display: flex;
                 flex-direction: column;
-                
-                background-color: var(--bg-inner);
-                border-radius: var(--border-radius-inner);
-                border: var(--group-border);
+                gap: 2px;
             }
             .game-ai-has-variants > .game-ai-general {
                 border-top-right-radius: unset;
                 border-bottom-right-radius: unset;
             }
+
+            .game-ai-select {
+                background-color: var(--bg-inner);
+                padding: 6px 8px;
+
+                display: flex;
+                flex-direction: column;
+
+                border-left: var(--border-default);
+                border-right: var(--border-default);
+            }
+            .game-ai-select:hover {
+                background-color: rgb(75, 75, 75);
+            }
+            .game-ai:not(.active) .game-ai-select:hover {
+                border-color: var(--border-active);
+            }
+            .game-ai-name {
+                font-size: 1.2em;
+            }
             .game-ai-desc {
                 flex-grow: 1;
-                margin-top: 4px;
+                margin-top: 8px;
                 font-size: var(--text-small-size);
-                /* color: var(--text-grey-color); */
             }
+            .game-ai:not(.active) .game-ai-desc {
+                margin-top: 4px;
+                color: var(--text-grey-color);
+            }
+
+            .game-ai-extended {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+
+                background-color: var(--bg-inner);
+                padding: 6px 8px;
+            }
+            .game-ai-extended .game-ai-desc {
+                /* background-color: var(--bg-inner);
+                padding: 6px 8px; */
+            }
+
             .game-ai-install {
                 margin-top: 6px;
                 padding: 2px 2px;
@@ -794,10 +825,10 @@
                 flex-grow: 1;
 
                 background-color: var(--bg-inner);
-                border-radius: var(--border-radius-inner);
+                /* border-radius: var(--border-radius-inner);
                 border: var(--group-border);
                 border-top-left-radius: unset;
-                border-bottom-left-radius: unset;
+                border-bottom-left-radius: unset; */
             }
             .game-ai-variants > div {
                 /* background-color:var(--bg-inner); */
@@ -1077,16 +1108,22 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     </div>
                     <div class="game-ais">
                         <div class="game-ais-list">
-                            <div class="game-ais-list-head">Installed AIs</div>
+                            <div class="game-ais-list-head">Installed</div>
                             <div class="game-ais-list-body">
-                                <div class="game-ai game-ai-has-variants active">
+                                <div class="game-ai game-ai-has-variants">
                                     <div class="game-ai-general">
-                                        <div class="game-ai-name">Standard AI / AIx</div>
-                                        <div class="game-ai-desc">
-                                            Outdated but provides many variants.<br><br>"AIx" is the cheating version with multipliers that can be adjusted in the lobby settings.</div>
-                                        <div class="game-ai-install game-ai-builtin button disabled">Built-In</div>
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-name">Standard AI / AIx</div>
+                                            <div class="game-ai-desc">Standard AI from SupCom:FA. Outdated but provides many variants.</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="game-ai-desc">
+                                                "AIx" is the cheating version with multipliers that can be adjusted in the lobby settings.
+                                            </div>
+                                            <div class="game-ai-install game-ai-builtin button disabled">Built-In</div>
+                                        </div>
                                     </div>
-                                    <div class="game-ai-variants">
+                                    <div class="game-ai-variants"  style="display: none;">
                                         <div class="game-ai-variant">
                                             Easy
                                         </div>
@@ -1109,11 +1146,15 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                                 </div>
                                 <div class="game-ai game-ai-has-variants">
                                     <div class="game-ai-general">
-                                        <div class="game-ai-name">Sorian AI</div>
-                                        <div class="game-ai-desc">Outdated but provides many variants. No longer updated for FAF.</div>
-                                        <div class="game-ai-install button">Remove</div>
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-name">Sorian AI</div>
+                                            <div class="game-ai-desc">AI Mod. Outdated but provides many variants. No longer updated for FAF.</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="game-ai-install button">Remove</div>
+                                        </div>
                                     </div>
-                                    <div class="game-ai-variants">
+                                    <div class="game-ai-variants"  style="display: none;">
                                         <div class="game-ai-variant">
                                             Rush
                                         </div>
@@ -1134,20 +1175,28 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             </div>
                         </div>
                         <div class="game-ais-list game-ais-recommended">
-                            <div class="game-ais-list-head">Recommended AIs</div>
+                            <div class="game-ais-list-head">Recommended</div>
                             <div class="game-ais-list-body">
                                 <div class="game-ai">
                                     <div class="game-ai-general">
-                                        <div class="game-ai-name">M27 AI</div>
-                                        <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF. Estimated PvP rank of 800-1100.</div>
-                                        <div class="game-ai-install button">Download</div>
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-name">M27 AI</div>
+                                            <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF. Estimated PvP rank of 800-1100.</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="game-ai-install button">Download</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="game-ai">
                                     <div class="game-ai-general">
-                                        <div class="game-ai-name">M28 AI</div>
-                                        <div class="game-ai-desc">Less strong than M27 AI currently, but much better performance (reduced CPU load).</div>
-                                        <div class="game-ai-install button">Download</div>
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-name">M28 AI</div>
+                                            <div class="game-ai-desc">Less strong than M27 AI currently, but much better performance (reduced CPU load).</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="game-ai-install button">Download</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1396,6 +1445,27 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         const isHard = difficultySwitch.eq(2).hasClass("active");
                         const isExpansion = timedExpansion.is(":checked");
                         warning.toggle(isHard && isExpansion);
+                    }
+                } {
+                    // AIs
+                    const container = $(".game-ais");
+                    const ais = container.find(".game-ai");
+                    const variants = ais.find(".game-ai-variants");
+                    const extendeds = ais.find(".game-ai-extended");
+                    ais.on("click", function(e) {
+                        const element = $(this);
+                        const isActive = element.hasClass("active");
+                        reset();
+                        if (!isActive) {
+                            element.addClass("active");
+                            element.find(".game-ai-variants").show();
+                            element.find(".game-ai-extended").show();
+                        }
+                    });
+                    function reset() {
+                        ais.removeClass("active");
+                        extendeds.hide();
+                        variants.hide();
                     }
                 }
             });

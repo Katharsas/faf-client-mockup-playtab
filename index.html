@@ -687,6 +687,21 @@
                 border-radius: var(--border-radius-inner);
                 padding: 1px 4px;
             }
+
+            /*
+             * SURVIVAL
+             */
+            .game-ai-desc {
+                margin-top: 4px;
+                font-size: var(--text-small-size);
+                color: var(--text-grey-color);
+            }
+            .game-ai-variants > div {
+                /* TODO move flex stuff to general radio-box styling */
+                flex-basis: 120px;
+                flex-grow: 1;
+                padding: 5px 10px;
+            }
         </style>
     </head>
     <body>
@@ -933,7 +948,61 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                 TODO
             </div>
             <div class="skirmish" style="display: none">
-                TODO
+                <!-- TODO -->
+                <div class="create-mission">
+                    <div class="group create-mission-settings">
+                        <div class="create-mission-buttons">
+                            <div class="radio-buttons">
+                                <div class="mission-select-solo">Solo</div>
+                                <div class="mission-select-coop active">Coop</div>
+                            </div>
+                            <div class="button button-primary mission-button-play">Host</div>
+                        </div>
+                        <div class="mission-hosting">
+                            <input class="input-inner" type="text" placeholder="Game Title (Required)">
+                            <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+                        </div>
+                    </div>
+                    <!-- <div class="group game-ais"> -->
+                        <div class="group game-ai">
+                            <div class="game-ai-name">Standard AI</div>
+                            <div class="game-ai-desc">Outdated but provides many variants.</div>
+                            <div class="game-ai-variants radio-buttons">
+                                <div class="game-ai-variant">
+                                    Easy
+                                </div>
+                                <div class="game-ai-variant">
+                                    Adaptive
+                                </div>
+                                <div class="game-ai-variant">
+                                    Rush
+                                </div>
+                                <div class="game-ai-variant">
+                                    Hard
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group game-ai">
+                            <div class="game-ai-name">Standard AI (Cheating)</div>
+                            <div class="game-ai-desc">Outdated but provides many variants.</div>
+                            <div class="game-ai-variants radio-buttons">
+                                <div class="game-ai-variant">
+                                    Easy
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group game-ai">
+                            <div class="game-ai-name">Standard AI</div>
+                            <div class="game-ai-desc">Outdated but provides many variants.</div>
+                            <div class="game-ai-variants radio-buttons">
+                                <div class="game-ai-variant">
+                                    Easy
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
             </div>
             <div class="list-options">
                 <div class="dropdown dropdown-gametypes">

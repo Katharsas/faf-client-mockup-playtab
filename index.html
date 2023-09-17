@@ -26,10 +26,12 @@
                 --group-button-border: 1px solid rgb(81, 84, 90);
 
                 --group-button-bg-hover: rgb(74, 74, 74);
+                --group-button-bg-hover-dark: rgb(37, 37, 37);
                 --group-button-border-hover: rgb(105, 105, 105);
 
                 --button-default-bg: rgb(67, 69, 75);
                 --button-default-border: 1px solid rgb(97, 97, 97);
+                --button-default-border-disabled: 1px solid rgb(75, 75, 75);
                 --button-default-shadow: 0px 2px 2px 0px var(--bg-default);
                 --button-default-light: inset 0px 1px 0px -0px rgb(118, 118, 118);
 
@@ -107,6 +109,20 @@
                 display: inline-block;
                 padding: 3px 0px;
             }
+            icon {
+                display: inline-flex;
+                color: rgb(237, 237, 237);
+            }
+            icon > svg {
+                width: 16px;
+                height: 16px;
+            }
+            a {
+                color: rgb(136, 173, 255);
+            }
+            a:visited {
+                color: rgb(142, 136, 255);
+            }
 
             /*
              * COMMON INNER ELEMENTS
@@ -139,9 +155,13 @@
                 border: 1px solid var(--button-default-border-hover);
             }
             .button.disabled, .button.disabled:hover {
+                cursor: inherit;
                 background-color: inherit;
-                border: var(--button-default-border);
+                border: var(--button-default-border-disabled);
                 box-shadow: none;
+            }
+            .button.disabled icon, .button.disabled:hover icon {
+                color: rgb(75, 75, 75);
             }
             .button-primary {
                 color: rgb(0, 0, 0);
@@ -502,7 +522,7 @@
             }
             .campaign-select:hover {
                 border-color: var(--border-active);
-                background-color: rgb(75, 75, 75);
+                background-color: var(--group-button-bg-hover);
                 
             }
             .campaign-select.active {
@@ -542,7 +562,7 @@
             }
             .campaign-missions > div:hover {
                 border-color: var(--border-active);
-                background-color: rgb(37, 37, 37);
+                background-color: var(--group-button-bg-hover-dark);
             }
             .campaign-missions > div.active {
                 background-color: var(--border-active);
@@ -706,61 +726,56 @@
                 height: 100%;
             }
             .game-ais {
-                display: flex;
-                gap: 8px;
-                min-height: 0;
+                width: 100%;
+                padding-right: 6px;
+                overflow-y: scroll;
             }
             .game-ais-list {
-                flex-basis: 50%;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
+                display: grid;
+                grid-template-columns: 0.1fr 0.3fr 2fr 0.3fr;
+                row-gap: 5px;
             }
             .game-ais-list-head {
                 text-align: center;
                 padding-top: 5px;
-                padding-right: 15px; /*offset scrollbar*/
+                padding-right: 15px; /* towards scrollbar */
             }
-            .game-ais-list-body {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding-right: 5px;
 
-                /* Firefox */
-                overflow-y: scroll;
-                scrollbar-width: thin;
-                scrollbar-color: var(--scrollhandle-default-bg) var(--bg-default);
-            }
-            .game-ais-list-body::-webkit-scrollbar {
-                width: 9px;
-            }
-            .game-ais-list-body::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            .game-ais-list-body::-webkit-scrollbar-thumb {
-                background-color: var(--scrollhandle-default-bg);
-                border-radius: 20px;
-                border: transparent;
-            }
             .game-ai {
-                border-radius: var(--border-radius-inner);
-                background-color: inherit;
+                grid-column-start: 3;
+                grid-column-end: 6;
+
                 display: flex;
                 gap: 2px;
-                /* align-items: flex-start; */
-                overflow: hidden;
-                /* min-height: 0; */
-                
             }
-            .game-ai.active {
+            .game-ai.game-ai-installed {
+                grid-column-start: 1;
+                grid-column-end: 4;
+            }
+            .game-ai-info {
+                border-radius: var(--border-radius-inner);
+                overflow: hidden;
+
+                flex-grow: 1;
+                display: flex;
+                gap: 2px;
+
                 border: var(--border-default);
+                border-color: var(--bg-inner);
+                border-top-style: none;
+                border-bottom-style: none;
+            }
+            .game-ai:not(.active) .game-ai-info:hover {
                 border-color: var(--border-active);
             }
-
+            .game-ai.active .game-ai-info {
+                border-color: var(--border-active);
+                border-top-style: solid;
+                border-bottom-style: solid;
+            }
             .game-ai-general {
-                /* flex-grow: 0; */
-                /* align-items: flex-end; */
+                flex-grow: 1;
+
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
@@ -773,81 +788,136 @@
             .game-ai-select {
                 background-color: var(--bg-inner);
                 padding: 6px 8px;
+                min-height: 75px;
+                flex-grow: 1;
 
                 display: flex;
                 flex-direction: column;
-
-                border-left: var(--border-default);
-                border-right: var(--border-default);
             }
             .game-ai-select:hover {
-                background-color: rgb(75, 75, 75);
+                cursor: pointer;
+                background-color: var(--group-button-bg-hover-dark);
             }
             .game-ai:not(.active) .game-ai-select:hover {
                 border-color: var(--border-active);
             }
+            .game-ai-select-top {
+                display: flex;
+                align-items: center;
+            }
+            .game-ai-select-top icon {
+                color: rgb(93, 224, 67);
+                order: -1;
+                padding-top: 1px;
+                margin-right: 7px;
+            }
             .game-ai-name {
                 font-size: 1.2em;
             }
+            .game-ai-select:hover .game-ai-name {
+                text-shadow: var(--text-shadow);
+            }
+            
             .game-ai-desc {
                 flex-grow: 1;
-                margin-top: 8px;
+                margin-top: 4px;
                 font-size: var(--text-small-size);
             }
             .game-ai:not(.active) .game-ai-desc {
-                margin-top: 4px;
                 color: var(--text-grey-color);
+            }
+            .game-ai:not(.active) .game-ai-select:hover .game-ai-desc {
+                color: rgb(212, 212, 212);
             }
 
             .game-ai-extended {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                row-gap: 2px;
 
-                background-color: var(--bg-inner);
-                padding: 6px 8px;
+                font-size: var(--text-small-size);
+
+                display: grid;
+                grid-template-columns: 0.3fr 1fr;
             }
-            .game-ai-extended .game-ai-desc {
-                /* background-color: var(--bg-inner);
-                padding: 6px 8px; */
+            .game-ai-extended > * {
+                background-color: var(--bg-inner);
+                padding: 3px 10px;
+                overflow: hidden;
+            }
+            .game-ai-extended a {
+                max-width: 100%;
+                display: inline-block;
+                
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
 
             .game-ai-install {
                 margin-top: 6px;
                 padding: 2px 2px;
                 width: 130px;
-                /* align-self: center; */
             }
+
             .game-ai-variants {
+                flex-basis: 90px;
+                flex-shrink: 0;
+                flex-grow: 0;
+
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
-                flex-grow: 1;
 
-                background-color: var(--bg-inner);
-                /* border-radius: var(--border-radius-inner);
-                border: var(--group-border);
-                border-top-left-radius: unset;
-                border-bottom-left-radius: unset; */
+                font-size: var(--text-small-size);
             }
             .game-ai-variants > div {
-                /* background-color:var(--bg-inner); */
+                background-color:var(--bg-inner);
                 padding: 3px 12px;
-                /* padding-right: 17px; */
+
+                flex-grow: 1;
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .game-ai-install-toggle {
+                flex-basis: 55px;
+                flex-shrink: 0;
+                flex-grow: 0;
+
                 text-align: center;
-                /* border-left: var(--border-default);
-                border-right: var(--border-default); */
             }
-            /* .game-ai-variants > div:hover {
-                border-color: var(--border-active);
-                background-color: rgb(37, 37, 37);
+            .game-ai:not(.game-ai-installed) .game-ai-install-toggle {
+                order: -1;
             }
-            .game-ai-variants > div.active {
-                background-color: var(--border-active);
-            } */
+            .game-ai.game-ai-installed       .game-ai-install-toggle > .icon-download,
+            .game-ai:not(.game-ai-installed) .game-ai-install-toggle > .icon-close-circle {
+                display: none;
+            }
+            .game-ai-install-toggle > icon {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .game-ai-install-toggle > icon svg {
+                width: 26px;
+                height: 26px;
+            }
         </style>
     </head>
     <body>
+        <div id="icon-templates" style="display: none;">
+            <svg id="icon-check-circle" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+            <svg id="icon-close-circle" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+            <svg id="icon-download" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 19">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3M9.5 1v10.93m4-3.93-4 4-4-4"/>
+            </svg>
+        </div>
         <div class="container">
             <!-- <div class="button-free button-back" style="display:none">Back</div> -->
             <div class="select select-pvp">
@@ -1108,98 +1178,194 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     </div>
                     <div class="game-ais">
                         <div class="game-ais-list">
-                            <div class="game-ais-list-head">Installed</div>
-                            <div class="game-ais-list-body">
-                                <div class="game-ai game-ai-has-variants">
+                            <div class="game-ai game-ai-installed game-ai-has-variants">
+                                <div class="game-ai-info">
                                     <div class="game-ai-general">
                                         <div class="game-ai-select">
-                                            <div class="game-ai-name">Standard AI / AIx</div>
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">Standard AI / AIx</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
                                             <div class="game-ai-desc">Standard AI from SupCom:FA. Outdated but provides many variants.</div>
                                         </div>
                                         <div class="game-ai-extended" style="display: none;">
-                                            <div class="game-ai-desc">
-                                                "AIx" is the cheating version with multipliers that can be adjusted in the lobby settings.
-                                            </div>
-                                            <div class="game-ai-install game-ai-builtin button disabled">Built-In</div>
+                                            <div class="property">Difficulty</div>
+                                            <div class="value">Adaptive: Estimated PvP rating of 0.</div>
+                                            <div class="property">Bonuses</div>
+                                            <div class="value">Cheating variant "AIx" has income and build power mulitpliers (adjustable in lobby settings).</div>
                                         </div>
                                     </div>
                                     <div class="game-ai-variants"  style="display: none;">
-                                        <div class="game-ai-variant">
-                                            Easy
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Normal
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Adaptive
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Rush
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Turtle
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Tech
-                                        </div>
+                                        <div class="game-ai-variant">Easy</div>
+                                        <div class="game-ai-variant">Normal</div>
+                                        <div class="game-ai-variant">Adaptive</div>
+                                        <div class="game-ai-variant">Rush</div>
+                                        <div class="game-ai-variant">Turtle</div>
+                                        <div class="game-ai-variant">Tech</div>
                                     </div>
                                 </div>
-                                <div class="game-ai game-ai-has-variants">
+                                <div class="game-ai-install-toggle button disabled">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
+                            </div>
+                            <div class="game-ai game-ai-installed game-ai-has-variants">
+                                <div class="game-ai-info">
                                     <div class="game-ai-general">
                                         <div class="game-ai-select">
-                                            <div class="game-ai-name">Sorian AI</div>
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">Sorian AI</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
                                             <div class="game-ai-desc">AI Mod. Outdated but provides many variants. No longer updated for FAF.</div>
                                         </div>
                                         <div class="game-ai-extended" style="display: none;">
-                                            <div class="game-ai-install button">Remove</div>
+                                            <div class="property">Difficulty</div>
+                                            <div class="value">Adaptive: Estimated PvP rating of 100.</div>
+                                            <div class="property">Bonuses</div>
+                                            <div class="value">Cheating variant "AIx" has income and build power mulitpliers (adjustable in lobby settings).</div>
+                                            <div class="property">Author</div>
+                                            <div class="value">Sorian</div>
                                         </div>
                                     </div>
                                     <div class="game-ai-variants"  style="display: none;">
-                                        <div class="game-ai-variant">
-                                            Rush
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Air
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Water
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Turtle
-                                        </div>
-                                        <div class="game-ai-variant">
-                                            Adaptive
-                                        </div>
+                                        <div class="game-ai-variant">Rush</div>
+                                        <div class="game-ai-variant">Air</div>
+                                        <div class="game-ai-variant">Water</div>
+                                        <div class="game-ai-variant">Turtle</div>
+                                        <div class="game-ai-variant">Adaptive</div>
                                     </div>
+                                </div>
+                                <div class="game-ai-install-toggle button disabled">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
                                 </div>
                             </div>
-                        </div>
-                        <div class="game-ais-list game-ais-recommended">
-                            <div class="game-ais-list-head">Recommended</div>
-                            <div class="game-ais-list-body">
-                                <div class="game-ai">
+                            <div class="game-ai">
+                                <div class="game-ai-info">
                                     <div class="game-ai-general">
                                         <div class="game-ai-select">
-                                            <div class="game-ai-name">M27 AI</div>
-                                            <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF. Estimated PvP rank of 800-1100.</div>
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">M27 AI</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
+                                            <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF.</div>
                                         </div>
                                         <div class="game-ai-extended" style="display: none;">
-                                            <div class="game-ai-install button">Download</div>
+                                            <div class="property">Difficulty</div>
+                                            <div class="value">Estimated PvP rating of 700-1200.</div>
+                                            <div class="property">Bonuses</div>
+                                            <div class="value">None</div>
+                                            <div class="property">Description</div>
+                                            <div class="value">Adaptive Al, intended for 20km and smaller maps. Report bugs to maudlin27 (discord or M27Al forum thread, which has more info on M27AI).</div>
+                                            <div class="property">Forum</div>
+                                            <div class="value"><a href="https://forum.faforever.com/topic/2373/ai-development-guide-and-m27ai-v73-devlog">https://forum.faforever.com/topic/2373/ai-development-guide-and-m27ai-v73-devlog</a></div>
+                                            <div class="property">Author</div>
+                                            <div class="value">maudlin27</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="game-ai">
+                                <div class="game-ai-install-toggle button">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
+                            </div>
+                            <div class="game-ai">
+                                <div class="game-ai-info">
                                     <div class="game-ai-general">
                                         <div class="game-ai-select">
-                                            <div class="game-ai-name">M28 AI</div>
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">M28 AI</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
                                             <div class="game-ai-desc">Less strong than M27 AI currently, but much better performance (reduced CPU load).</div>
                                         </div>
                                         <div class="game-ai-extended" style="display: none;">
-                                            <div class="game-ai-install button">Download</div>
+                                            <div class="property">Bonuses</div>
+                                            <div class="value">None</div>
+                                            <div class="property">Forum</div>
+                                            <div class="value"><a href="https://forum.faforever.com/topic/5331/m28ai-devlog-v39">https://forum.faforever.com/topic/5331/m28ai-devlog-v39</a></div>
+                                            <div class="property">Author</div>
+                                            <div class="value">maudlin27</div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="game-ai-install-toggle button">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
                             </div>
+                            <div class="game-ai">
+                                <div class="game-ai-info">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">AI-Uveso</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
+                                            <div class="game-ai-desc">AI-Uveso</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="property">Author</div>
+                                            <div class="value">Uveso</div>
+                                        </div>
+                                    </div>
+                                    <div class="game-ai-variants"  style="display: none;">
+                                        <div class="game-ai-variant">Easy</div>
+                                        <div class="game-ai-variant">Rush</div>
+                                        <div class="game-ai-variant">Adaptive</div>
+                                        <div class="game-ai-variant">Experimentals</div>
+                                        <div class="game-ai-variant">Overwhelm</div>
+                                    </div>
+                                </div>
+                                <div class="game-ai-install-toggle button">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
+                            </div>
+                            <div class="game-ai">
+                                <div class="game-ai-info">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">RNGAI</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
+                                            <div class="game-ai-desc">RNGAI</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="property">Author</div>
+                                            <div class="value">Relent0r</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="game-ai-install-toggle button">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
+                            </div>
+                            <div class="game-ai">
+                                <div class="game-ai-info">
+                                    <div class="game-ai-general">
+                                        <div class="game-ai-select">
+                                            <div class="game-ai-select-top">
+                                                <div class="game-ai-name">DilliDalli</div>
+                                                <icon class="icon-check-circle"></icon>
+                                            </div>
+                                            <div class="game-ai-desc">DilliDalli</div>
+                                        </div>
+                                        <div class="game-ai-extended" style="display: none;">
+                                            <div class="property">Author</div>
+                                            <div class="value">Softles</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="game-ai-install-toggle button">
+                                    <icon class="icon-close-circle"></icon>
+                                    <icon class="icon-download"></icon>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -1450,16 +1616,18 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                     // AIs
                     const container = $(".game-ais");
                     const ais = container.find(".game-ai");
+                    const aiSelects = ais.find(".game-ai-select");
                     const variants = ais.find(".game-ai-variants");
                     const extendeds = ais.find(".game-ai-extended");
-                    ais.on("click", function(e) {
-                        const element = $(this);
-                        const isActive = element.hasClass("active");
+                    aiSelects.on("click", function(e) {
+                        const select = $(this);
+                        const ai = select.parents(".game-ai");
+                        const isActive = ai.hasClass("active");
                         reset();
                         if (!isActive) {
-                            element.addClass("active");
-                            element.find(".game-ai-variants").show();
-                            element.find(".game-ai-extended").show();
+                            ai.addClass("active");
+                            ai.find(".game-ai-variants").show();
+                            ai.find(".game-ai-extended").show();
                         }
                     });
                     function reset() {
@@ -1467,6 +1635,28 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                         extendeds.hide();
                         variants.hide();
                     }
+                    function toggleInstalled(ai) {
+                        const isInstalled = ai.hasClass("game-ai-installed");
+                        ai.find(".game-ai-select-top .icon-check-circle").toggle(isInstalled);
+                    }
+                    ais.each(function() {
+                        const ai = $(this);
+                        ai.find(".button.game-ai-install-toggle").not(".disabled").on("click", function(e) {
+                            ai.toggleClass("game-ai-installed");
+                            toggleInstalled(ai);
+                        });
+                        toggleInstalled(ai);
+                    });
+                } {
+                    // create icons by closing from templates
+                    const templates = $("#icon-templates svg");
+                    $("icon").each(function () {
+                        const element = $(this);
+                        const iconName = Array.from(this.classList).filter(clazz => clazz.startsWith("icon"))[0];
+                        const template = templates.filter("#" + iconName)[0];
+                        const cloned = template.cloneNode(true);
+                        this.appendChild(cloned);
+                    });
                 }
             });
             

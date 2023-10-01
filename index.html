@@ -46,7 +46,7 @@
                 --text-small-size: 12.48px;
                 --text-grey-color: rgb(150, 150, 150);
 
-                --scrollhandle-default-bg: #c2c2c2;
+                --scrollhandle-default-bg: rgb(224, 224, 224);;
             }
             * {
                 box-sizing: border-box;
@@ -122,6 +122,24 @@
             }
             a:visited {
                 color: rgb(142, 136, 255);
+            }
+            /* Scrollbar Firefox */
+            .scrollbar-thin {
+                scrollbar-width: thin;
+                scrollbar-color: var(--scrollhandle-default-bg) transparent;
+            }
+            /* Scrollbar Chrome */
+            .scrollbar-thin::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .scrollbar-thin::-webkit-scrollbar-thumb {
+                background-color: var(--scrollhandle-default-bg);
+                border-radius: 16px;
+                border: transparent;
             }
 
             /*
@@ -343,9 +361,16 @@
 
                 grid-row-start: 2;
                 grid-row-end: 4;
-                background-color: var(--bg-default);
 
+                background-color: var(--bg-default);
                 padding: 6px;
+                display: flex;
+            }
+            .list-scrollbar {
+                overflow-x: hidden;
+                overflow-y: scroll;
+                padding-right: 6px;
+
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
@@ -1090,7 +1115,7 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                             <input class="input-inner" type="text" placeholder="Game Password (Optional)">
                         </div>
                     </div>
-                    <div class="game-ais">
+                    <div class="game-ais scrollbar-thin">
                         <div class="game-ais-list">
                             <div class="game-ai game-ai-installed game-ai-has-variants">
                                 <div class="game-ai-info">
@@ -1298,90 +1323,91 @@ You will defeat the enemy commanders on Griffin IV and end the siege of Fort Cla
                 </div>
             </div>
             <div class="list">
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">PvP Custom Game 01</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-rated">
-                            <div>rated</div>
+                <div class="list-scrollbar scrollbar-thin">
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">PvP Custom Game 01</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-rated">
+                                <div>rated</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">PvP Custom Game 02</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-rated">
+                                <div>rated</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">PvP Custom Game 03</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-rated">
+                                <div>rated (beta)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">PvP Custom Game 04</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">PvP Custom Game 05</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">Survival</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-survival">
+                                <div>survival</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">Campaign Mission 01</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-campaign">
+                                <div>campaign</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-game">
+                        <div class="map-preview"></div>
+                        <div class="game-info">
+                            <div class="game-name">Campaign Mission 02</div>
+                            <div class="game-info"></div>
+                            <div class="game-tags tag-campaign">
+                                <div>campaign</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">PvP Custom Game 02</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-rated">
-                            <div>rated</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">PvP Custom Game 03</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-rated">
-                            <div>rated (beta)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">PvP Custom Game 04</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags">
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">PvP Custom Game 05</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags">
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">Survival</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-survival">
-                            <div>survival</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">Campaign Mission 01</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-campaign">
-                            <div>campaign</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-game">
-                    <div class="map-preview"></div>
-                    <div class="game-info">
-                        <div class="game-name">Campaign Mission 02</div>
-                        <div class="game-info"></div>
-                        <div class="game-tags tag-campaign">
-                            <div>campaign</div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
         <script>
             $(document).ready(() => {
-                const preNavigate = "skirmish"; // debug flag
+                const preNavigate = "campaigns"; // debug flag
                 {
                     // games list
                     const options = $(".dropdown-gametypes .dropdown-options");

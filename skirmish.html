@@ -1,0 +1,434 @@
+<style>
+    .skirmish > .create-mission {
+        height: 100%;
+    }
+    .game-ais {
+        width: 100%;
+        padding-right: 6px;
+        overflow-y: scroll;
+    }
+    .game-ais-list {
+        display: grid;
+        grid-template-columns: 0.1fr 0.3fr 2fr 0.3fr;
+        row-gap: 5px;
+    }
+    .game-ais-list-head {
+        text-align: center;
+        padding-top: 5px;
+        padding-right: 15px; /* towards scrollbar */
+    }
+
+    .game-ai {
+        grid-column-start: 3;
+        grid-column-end: 6;
+
+        display: flex;
+        gap: 2px;
+    }
+    .game-ai.game-ai-installed {
+        grid-column-start: 1;
+        grid-column-end: 4;
+    }
+    .game-ai-info {
+        border-radius: var(--border-radius-inner);
+        overflow: hidden;
+
+        flex-grow: 1;
+        display: flex;
+        gap: 2px;
+
+        border: var(--border-default);
+        border-color: var(--bg-inner);
+        border-top-style: none;
+        border-bottom-style: none;
+    }
+    .game-ai:not(.active) .game-ai-info:hover {
+        border-color: var(--border-active);
+    }
+    .game-ai.active .game-ai-info {
+        border-color: var(--border-active);
+        border-top-style: solid;
+        border-bottom-style: solid;
+    }
+    .game-ai-general {
+        flex-grow: 1;
+
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .game-ai-has-variants > .game-ai-general {
+        border-top-right-radius: unset;
+        border-bottom-right-radius: unset;
+    }
+
+    .game-ai-select {
+        background-color: var(--bg-inner);
+        padding: 6px 8px;
+        min-height: 75px;
+        flex-grow: 1;
+
+        display: flex;
+        flex-direction: column;
+    }
+    .game-ai-select:hover {
+        cursor: pointer;
+        background-color: var(--group-button-bg-hover-dark);
+    }
+    .game-ai:not(.active) .game-ai-select:hover {
+        border-color: var(--border-active);
+    }
+    .game-ai-select-top {
+        display: flex;
+        align-items: center;
+    }
+    .game-ai-select-top icon {
+        color: rgb(93, 224, 67);
+        order: -1;
+        padding-top: 1px;
+        margin-right: 7px;
+    }
+    .game-ai-name {
+        font-size: 1.2em;
+    }
+    .game-ai-select:hover .game-ai-name {
+        text-shadow: var(--text-shadow);
+    }
+    
+    .game-ai-desc {
+        flex-grow: 1;
+        margin-top: 4px;
+        font-size: var(--text-small-size);
+    }
+    .game-ai:not(.active) .game-ai-desc {
+        color: var(--text-grey-color);
+    }
+    .game-ai:not(.active) .game-ai-select:hover .game-ai-desc {
+        color: rgb(212, 212, 212);
+    }
+
+    .game-ai-extended {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2px;
+
+        font-size: var(--text-small-size);
+
+        display: grid;
+        grid-template-columns: 0.3fr 1fr;
+    }
+    .game-ai-extended > * {
+        background-color: var(--bg-inner);
+        padding: 3px 10px;
+        overflow: hidden;
+    }
+    .game-ai-extended a {
+        max-width: 100%;
+        display: inline-block;
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .game-ai-install {
+        margin-top: 6px;
+        padding: 2px 2px;
+        width: 130px;
+    }
+
+    .game-ai-variants {
+        flex-basis: 90px;
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        font-size: var(--text-small-size);
+    }
+    .game-ai-variants > div {
+        background-color:var(--bg-inner);
+        padding: 3px 12px;
+
+        flex-grow: 1;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .game-ai-install-toggle {
+        flex-basis: 55px;
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        text-align: center;
+    }
+    .game-ai:not(.game-ai-installed) .game-ai-install-toggle {
+        order: -1;
+    }
+    .game-ai.game-ai-installed       .game-ai-install-toggle > .icon-download,
+    .game-ai:not(.game-ai-installed) .game-ai-install-toggle > .icon-close-circle {
+        display: none;
+    }
+    .game-ai-install-toggle > icon {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .game-ai-install-toggle > icon svg {
+        width: 26px;
+        height: 26px;
+    }
+</style>
+
+<!-- TODO -->
+<div class="create-mission">
+    <div class="group create-mission-settings">
+        <div class="create-mission-buttons">
+            <div class="radio-buttons">
+                <div class="mission-select-solo">Solo</div>
+                <div class="mission-select-coop active">Coop</div>
+            </div>
+            <div class="button button-primary mission-button-play">Host</div>
+        </div>
+        <div class="mission-hosting">
+            <input class="input-inner" type="text" placeholder="Game Title (Required)">
+            <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+        </div>
+    </div>
+    <div class="game-ais scrollbar-thin">
+        <div class="game-ais-list">
+            <div class="game-ai game-ai-installed game-ai-has-variants">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">Standard AI / AIx</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">Standard AI from SupCom:FA. Outdated but provides many variants.</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Difficulty</div>
+                            <div class="value">Adaptive: Estimated PvP rating of 0.</div>
+                            <div class="property">Bonuses</div>
+                            <div class="value">Cheating variant "AIx" has income and build power mulitpliers (adjustable in lobby settings).</div>
+                        </div>
+                    </div>
+                    <div class="game-ai-variants"  style="display: none;">
+                        <div class="game-ai-variant">Easy</div>
+                        <div class="game-ai-variant">Normal</div>
+                        <div class="game-ai-variant">Adaptive</div>
+                        <div class="game-ai-variant">Rush</div>
+                        <div class="game-ai-variant">Turtle</div>
+                        <div class="game-ai-variant">Tech</div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button disabled">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai game-ai-installed game-ai-has-variants">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">Sorian AI</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">AI Mod. Outdated but provides many variants. No longer updated for FAF.</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Difficulty</div>
+                            <div class="value">Adaptive: Estimated PvP rating of 100.</div>
+                            <div class="property">Bonuses</div>
+                            <div class="value">Cheating variant "AIx" has income and build power mulitpliers (adjustable in lobby settings).</div>
+                            <div class="property">Author</div>
+                            <div class="value">Sorian</div>
+                        </div>
+                    </div>
+                    <div class="game-ai-variants"  style="display: none;">
+                        <div class="game-ai-variant">Rush</div>
+                        <div class="game-ai-variant">Air</div>
+                        <div class="game-ai-variant">Water</div>
+                        <div class="game-ai-variant">Turtle</div>
+                        <div class="game-ai-variant">Adaptive</div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button disabled">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">M27 AI</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">Currently the strongest non-cheating general AI for FAF.</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Difficulty</div>
+                            <div class="value">Estimated PvP rating of 700-1200.</div>
+                            <div class="property">Bonuses</div>
+                            <div class="value">None</div>
+                            <div class="property">Description</div>
+                            <div class="value">Adaptive Al, intended for 20km and smaller maps. Report bugs to maudlin27 (discord or M27Al forum thread, which has more info on M27AI).</div>
+                            <div class="property">Forum</div>
+                            <div class="value"><a href="https://forum.faforever.com/topic/2373/ai-development-guide-and-m27ai-v73-devlog">https://forum.faforever.com/topic/2373/ai-development-guide-and-m27ai-v73-devlog</a></div>
+                            <div class="property">Author</div>
+                            <div class="value">maudlin27</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">M28 AI</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">Less strong than M27 AI currently, but much better performance (reduced CPU load).</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Bonuses</div>
+                            <div class="value">None</div>
+                            <div class="property">Forum</div>
+                            <div class="value"><a href="https://forum.faforever.com/topic/5331/m28ai-devlog-v39">https://forum.faforever.com/topic/5331/m28ai-devlog-v39</a></div>
+                            <div class="property">Author</div>
+                            <div class="value">maudlin27</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">AI-Uveso</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">AI-Uveso</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Author</div>
+                            <div class="value">Uveso</div>
+                        </div>
+                    </div>
+                    <div class="game-ai-variants"  style="display: none;">
+                        <div class="game-ai-variant">Easy</div>
+                        <div class="game-ai-variant">Rush</div>
+                        <div class="game-ai-variant">Adaptive</div>
+                        <div class="game-ai-variant">Experimentals</div>
+                        <div class="game-ai-variant">Overwhelm</div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">RNGAI</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">RNGAI</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Author</div>
+                            <div class="value">Relent0r</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            <div class="game-ai">
+                <div class="game-ai-info">
+                    <div class="game-ai-general">
+                        <div class="game-ai-select">
+                            <div class="game-ai-select-top">
+                                <div class="game-ai-name">DilliDalli</div>
+                                <icon class="icon-check-circle"></icon>
+                            </div>
+                            <div class="game-ai-desc">DilliDalli</div>
+                        </div>
+                        <div class="game-ai-extended" style="display: none;">
+                            <div class="property">Author</div>
+                            <div class="value">Softles</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-ai-install-toggle button">
+                    <icon class="icon-close-circle"></icon>
+                    <icon class="icon-download"></icon>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+    {
+        // AIs
+        const container = $(".game-ais");
+        const ais = container.find(".game-ai");
+        const aiSelects = ais.find(".game-ai-select");
+        const variants = ais.find(".game-ai-variants");
+        const extendeds = ais.find(".game-ai-extended");
+        aiSelects.on("click", function(e) {
+            const select = $(this);
+            const ai = select.parents(".game-ai");
+            const isActive = ai.hasClass("active");
+            reset();
+            if (!isActive) {
+                ai.addClass("active");
+                ai.find(".game-ai-variants").show();
+                ai.find(".game-ai-extended").show();
+            }
+        });
+        function reset() {
+            ais.removeClass("active");
+            extendeds.hide();
+            variants.hide();
+        }
+        function toggleInstalled(ai) {
+            const isInstalled = ai.hasClass("game-ai-installed");
+            ai.find(".game-ai-select-top .icon-check-circle").toggle(isInstalled);
+        }
+        ais.each(function() {
+            const ai = $(this);
+            ai.find(".button.game-ai-install-toggle").not(".disabled").on("click", function(e) {
+                ai.toggleClass("game-ai-installed");
+                toggleInstalled(ai);
+            });
+            toggleInstalled(ai);
+        });
+    }
+    });
+</script>

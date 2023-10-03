@@ -1,13 +1,90 @@
 <style>
+    /* TODO right now everything is inside create-mission */
     .skirmish > .create-mission {
         height: 100%;
+        gap: 30px;
     }
+
+    .select-map-top {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px;
+        align-items: center;
+    }
+    .select-map-top-title {
+        padding: 0px 5px;
+    }
+    .select-map-top > .button {
+        padding: 6px 14px;
+    }
+    .select-map-list {
+        margin-top: 5px;
+        display: flex;
+        gap: 5px;
+        width: 100%;
+    }
+    .select-map-list .group-button {
+        flex-grow: 1;
+    }
+    .select-map-map {
+        flex-basis: 105px;
+        background-color: var(--bg-inner);
+        border-radius: var(--border-radius-inner);
+        overflow: hidden;
+    }
+    .select-map-map.active {
+        border-width: var(--border-default-size);
+        border-color: var(--active);
+    }
+    .select-map-map img {
+        border: 1px solid var(--bg-inner);
+        width: 100%;
+
+        border-radius: var(--border-radius-inner);
+        overflow: hidden;
+    }
+    .select-map-map-name {
+        padding: 0px 3px 3px 3px;
+        font-size: 0.7em;
+        text-align: center;
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .button-maps-next-page {
+        padding: 15px 8px 16px 9px;
+        font-size: 2.1em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .game-ais {
         width: 100%;
         padding-right: 6px;
         overflow-y: scroll;
     }
+    .game-ais-top {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px;
+        align-items: stretch;
+    }
+    .game-ais-top-title {
+        padding: 0px 5px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+    .game-ais-top-title icon svg{
+        height: 19px;
+    }
+    .game-ais-top > .button {
+        padding: 6px 14px;
+    }
     .game-ais-list {
+        margin-top: 5px;
         display: grid;
         grid-template-columns: 0.1fr 0.3fr 2fr 0.3fr;
         row-gap: 5px;
@@ -43,10 +120,10 @@
         border-bottom-style: none;
     }
     .game-ai:not(.active) .game-ai-info:hover {
-        border-color: var(--border-active);
+        border-color: var(--active);
     }
     .game-ai.active .game-ai-info {
-        border-color: var(--border-active);
+        border-color: var(--active);
         border-top-style: solid;
         border-bottom-style: solid;
     }
@@ -76,7 +153,7 @@
         background-color: var(--group-button-bg-hover-dark);
     }
     .game-ai:not(.active) .game-ai-select:hover {
-        border-color: var(--border-active);
+        border-color: var(--active);
     }
     .game-ai-select-top {
         display: flex;
@@ -198,7 +275,43 @@
             <input class="input-inner" type="text" placeholder="Game Password (Optional)">
         </div>
     </div>
+    <div class="select-map">
+        <div class="select-map-top group">
+            <div class="select-map-top-title">Recently Played Maps</div>
+            <div class="button">Search in Map Vault</div>
+        </div>
+        <div class="select-map-list">
+            <div class="select-map-map active group">
+                <img src="map_previews/map01.png">
+                <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+            </div>
+            <div class="select-map-map group">
+                <img src="map_previews/map02.png">
+                <div class="select-map-map-name">Battle of Thermopylae OFFICIAL</div>
+            </div>
+            <div class="select-map-map group">
+                <img src="map_previews/map03.png">
+                <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+            </div>
+            <div class="select-map-map group">
+                <img src="map_previews/map04.png">
+                <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+            </div>
+            <div class="select-map-map group">
+                <img src="map_previews/map06_large.png">
+                <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+            </div>
+            <div class="group-button button-maps-next-page">❯</div>
+        </div>
+    </div>
     <div class="game-ais scrollbar-thin">
+        <div class="game-ais-top group">
+            <div class="game-ais-top-title" title="Installed AIs can be added as players inside the game-lobby.">
+                <div>Popular AIs</div>
+                <icon class="icon-info-circle"></icon>
+            </div>
+            <div class="button">Search in Mod Vault</div>
+        </div>
         <div class="game-ais-list">
             <div class="game-ai game-ai-installed game-ai-has-variants">
                 <div class="game-ai-info">

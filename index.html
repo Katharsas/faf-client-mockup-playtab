@@ -132,10 +132,11 @@
             }
             icon {
                 display: inline-flex;
+                align-items: center;
                 color: rgb(237, 237, 237);
             }
             icon > svg {
-                width: 16px;
+                /* width: 16px; */
                 height: 16px;
             }
             a {
@@ -492,6 +493,9 @@
             <svg id="icon-download" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 19">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3M9.5 1v10.93m4-3.93-4 4-4-4"/>
             </svg>
+            <svg id="icon-info-circle" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+              </svg>
         </div>
         <div class="container">
             <!-- <div class="button-free button-back" style="display:none">Back</div> -->
@@ -624,7 +628,7 @@
             </div>
         </div>
         <script>
-            const preNavigate = "campaigns"; // debug flag
+            const preNavigate = "skirmish"; // debug flag
 
             const loaded = Promise.all([
                 new Promise((resolve, reject) => {

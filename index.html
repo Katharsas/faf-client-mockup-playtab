@@ -99,9 +99,6 @@
                 grid-gap: 8px;
                 padding: 8px;
             }
-            .container > * {
-                border-radius: var(--border-radius);
-            }
             .dropdown {
                 background-color:var(--bg-inner);
                 border-radius: var(--border-radius);
@@ -472,13 +469,27 @@
                 padding: 1px 9px 2px 8px;
             }
 
+            .map-name-small {
+                padding: 0px 3px 3px 3px;
+                font-size: 0.7em;
+                text-align: center;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
             
             .tmm, .custom, .campaigns, .survival, .skirmish {
                 grid-column-start: 2;
                 grid-row-start: 2;
                 grid-row-end: 4;
+                
+            }
+            .tmm, .campaigns, .survival, .skirmish {
+                /* TODO this should be done by each page */
                 background-color: var(--bg-default);
                 padding: 6px;
+                border-radius: var(--border-radius);
             }
         </style>
     </head>
@@ -628,9 +639,12 @@
             </div>
         </div>
         <script>
-            const preNavigate = "skirmish"; // debug flag
+            const preNavigate = "custom"; // debug flag
 
             const loaded = Promise.all([
+                new Promise((resolve, reject) => {
+                    $(".custom").load("custom.html", () => {resolve();});
+                }),
                 new Promise((resolve, reject) => {
                     $(".campaigns").load("campaigns.html", () => {resolve();});
                 }),

@@ -1,0 +1,235 @@
+<style>
+
+    .custom {
+        background-color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .option-tiles {
+        display: flex;
+        gap: 5px;
+    }
+    .option-tile {
+        width: 25%;
+        height: 210px;
+        /* height: 150px; */
+        padding: 5px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .option-tile-disabled {
+        color: rgb(100, 100, 100);
+        background-color: inherit;
+        border: 1px dotted rgb(66, 66, 66);
+    }
+
+    .option-tile-header {
+        font-size: 1.2em;
+        text-align: center;
+        padding: 5px;
+    }
+    .option-tile-content {
+        height: 154px;
+
+        /* background-color: var(--group-button-bg-hover-dark); */
+        background-color: var(--bg-default);
+        /* flex-grow: 1; */
+
+        /* border: var(--button-default-border); */
+        border: 2px solid var(--bg-default);
+    }
+    .option-tile-content > img {
+        width:100%;
+        /* height: 130px; */
+        /* height: auto; */
+    }
+    .tile-map > .option-tile-content {
+        /* border: var(--button-default-border); */
+    }
+    .tile-mods > .option-tile-content {
+        /* flex-grow: 1; */
+    }
+    .tile-mods > .option-tile-content > :nth-child(2) {
+        background-color: var(--bg-inner);
+    }
+    .tile-mods-mod {
+
+    }
+
+    .create-game {
+        background-color: var(--bg-default);
+        border-radius: var(--border-radius);
+        padding: 6px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .options-container {
+        background-color: var(--bg-default);
+        border-radius: var(--border-radius);
+        padding: 6px;
+
+        overflow-y: hidden;
+        display: flex; /* make child scrollable */
+    }
+    .options {
+        overflow-y: scroll;
+        padding-right: 6px;
+    }
+    .option-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px;
+        align-items: center;
+    }
+    .option-header-title {
+        padding: 0px 5px;
+    }
+    .option-header-title > .button {
+        padding: 6px 14px;
+    }
+
+
+    .tile-map-body {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+</style>
+
+<div class="create-game">
+
+    <div class="option-tiles">
+        <div class="option-tile card card-click" data-tile-id="lobby">
+            <div class="option-tile-header">Game</div>
+            <div class="option-tile-content">
+                <div class="button button-primary mission-button-play">Host</div>
+            </div>
+        </div>
+        <div class="option-tile card card-click"  data-tile-id="map">
+            <div class="option-tile-header">Map</div>
+            <div class="option-tile-content">
+                <img src="map_previews/map01.png">
+                <div class="map-name-small">Setons Clutch - FAF Version</div>
+            </div>
+        </div>
+        <div class="option-tile card card-click" data-tile-id="mods">
+            <div class="option-tile-header">Mods</div>
+            <div class="option-tile-content">
+                <div class="tile-mods-mod">Mod 1</div>
+                <div class="tile-mods-mod">Mod 2</div>
+                <div class="tile-mods-mod">Mod 3</div>
+            </div>
+        </div>
+        <div class="option-tile card card-click"  data-tile-id="ais">
+            <div class="option-tile-header">AI</div>
+        </div>
+        <!-- <div class="option-tile option-tile-disabled"></div> -->
+    </div>
+</div>
+
+<div class="options-container" data-tile-id="lobby">
+    <div class="group create-mission-settings">
+        <div class="create-mission-buttons">
+            <div class="radio-buttons">
+                <div class="mission-select-solo">Solo</div>
+                <div class="mission-select-coop active">Coop</div>
+            </div>
+            <div class="button button-primary mission-button-play">Host</div>
+        </div>
+        <div class="mission-hosting">
+            <input class="input-inner" type="text" placeholder="Game Title (Required)">
+            <input class="input-inner" type="text" placeholder="Game Password (Optional)">
+        </div>
+    </div>
+</div>
+
+<div class="options-container" data-tile-id="map">
+    <div class="options scrollbar-thin tile-map-body">
+        <div>
+            <div class="option-header group">
+                <div class="option-header-title">Recently Played</div>
+                <div class="button">My Replays</div>
+            </div>
+            <div class="select-map-list">
+                <div class="select-map-map active group">
+                    <img src="map_previews/map01.png">
+                    <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+                </div>
+                <div class="select-map-map group">
+                    <img src="map_previews/map02.png">
+                    <div class="select-map-map-name">Battle of Thermopylae OFFICIAL</div>
+                </div>
+                <div class="select-map-map group">
+                    <img src="map_previews/map03.png">
+                    <div class="select-map-map-name">Fields of Isis</div>
+                </div>
+                <div class="select-map-map group">
+                    <img src="map_previews/map04.png">
+                    <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+                </div>
+                <div class="select-map-map group">
+                    <img src="map_previews/map05.png">
+                    <div class="select-map-map-name">Setons Clutch - FAF Version</div>
+                </div>
+                <div class="group-button button-maps-next-page">❯</div>
+            </div>
+        </div>
+        <div class="select-map">
+            <div class="option-header group">
+                <div class="option-header-title">Spotlight</div>
+                <div class="button">Map Vault</div>
+            </div>
+            <div class="select-map-list">
+                <div class="select-map-map group">
+                    <img src="map_previews/map06_large.png">
+                    <div class="select-map-map-name">UEF Campaign Mission 01</div>
+                </div>
+            </div>
+        </div>
+        <div class="select-map">
+            <div class="option-header group">
+                <div class="option-header-title">Map Generator</div>
+            </div>
+            <div class="select-map-list">
+                <div class="select-map-map group">
+                    <img src="map_previews/map06_large.png">
+                    <div class="select-map-map-name">UEF Campaign Mission 01</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+    {
+        const page = $(".custom");
+        const tiles = page.find(".option-tiles .option-tile");
+        const options = page.find(".options-container");
+        tiles.on("click", function(e) {
+            const tile = $(this);
+            const isActive = tile.hasClass("active");
+            reset();
+            if (!isActive) {
+                tile.addClass("active");
+                const tileId = tile.data("tile-id");
+                const body = options.filter("[data-tile-id='" + tileId + "']");
+                body.show();
+            }
+        });
+        function reset() {
+            tiles.removeClass("active");
+            options.hide();
+        }
+        tiles.first().click();
+    }
+    });
+</script>

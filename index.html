@@ -14,39 +14,60 @@
 
                 --border-default-size: 3px;
                 --border-default: var(--border-default-size) solid rgb(66, 66, 66, 0);
-                --border-active: rgb(18, 77, 167);
+                --active: rgb(18, 77, 167);
+                --active-hover: rgb(24, 89, 185);
+                --active-light: rgb(30, 104, 214);
                 --hover-top-shadow-3d: inset 0px 2px 2px -1px rgb(90, 90, 90); 
                 --hover-top-shadow-3d-blue: inset 0px 2px 2px -1px rgb(46, 83, 143);
 
-                --text-shadow: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
+                --text-shadow: 0px 0px 1px rgb(0, 5, 15), 0px 0px 6px #6898ff, 0px 1px 7px #0167ff, 5px 1px 10px #4e86ff, 25px 1px 17px #0149ce;
                 --text-shadow-2: 0px 0px 6px #6898ff, 0px 1px 7px #0167ff;
                 
+                /* General - Inner */
+
                 --bg-inner: rgb(49, 53, 58);
                 --group-border: 1px solid rgb(59, 62, 71);
-                --group-button-border: 1px solid rgb(81, 84, 90);
 
+                --group-button-border: 1px solid rgb(81, 84, 90);
                 --group-button-bg-hover: rgb(74, 74, 74);
                 --group-button-bg-hover-dark: rgb(37, 37, 37);
                 --group-button-border-hover: rgb(105, 105, 105);
+
+                /* General - Inner Card */
+
+                --card-border: 2px solid var(--bg-inner);
+                --card-shadow: 0px 2px 2px 0px rgb(13, 14, 15);
+                --card-light: 0px -1px 0px -0px rgb(83, 83, 83);
+
+                --card-bg-hover: rgb(49, 61, 75);
+                --card-border-hover: rgb(105, 105, 105);
+
+                /* General - Inner Button */
 
                 --button-default-bg: rgb(67, 69, 75);
                 --button-default-border: 1px solid rgb(97, 97, 97);
                 --button-default-border-disabled: 1px solid rgb(75, 75, 75);
                 --button-default-shadow: 0px 2px 2px 0px var(--bg-default);
-                --button-default-light: inset 0px 1px 0px -0px rgb(118, 118, 118);
+                --button-default-light: 0px -1px 0px -0px rgb(118, 118, 118);
 
                 --button-default-bg-hover: rgb(86, 86, 86);
                 --button-default-border-hover: rgb(139, 139, 139);
 
                 --button-primary-bg: rgb(224, 224, 224);
-                --button-primary-border: 1px solid rgb(175, 174, 174);
-                --button-primary-light: inset 0px 1px 1px 0px rgb(255, 255, 255);
+                --button-primary-border: 1px solid rgb(224, 224, 224);
+                --button-primary-light: 0px -1px 0px 0px rgb(255, 255, 255);
                 --button-primary-bg-hover: rgb(250, 250, 250);
 
+                --button-active-bg: var(--active);
+                --button-active-border: 1px solid var(--active-hover);
+                --button-active-light: 0px -1px 0px -0px var(--active-light);
+
+                /* General - Other */
+                
                 --text-small-size: 12.48px;
                 --text-grey-color: rgb(150, 150, 150);
 
-                --scrollhandle-default-bg: rgb(224, 224, 224);;
+                --scrollhandle-default-bg: rgb(224, 224, 224);
             }
             * {
                 box-sizing: border-box;
@@ -56,7 +77,7 @@
                 position: relative;
                 bottom: .10em;
                 margin-right: 6px;
-                background-color: var(--border-active);
+                background-color: var(--active);
             }
             input[type=text] {
                 color: inherit;
@@ -103,7 +124,7 @@
                 background-color: var(--bg-default);
                 border-radius: var(--border-radius);
                 padding: 7px;
-                border: 2px solid var(--border-active);
+                border: 2px solid var(--active);
             }
             .dropdown-option {
                 display: inline-block;
@@ -160,6 +181,29 @@
                 background-color: var(--group-button-bg-hover);
                 border-color: var(--group-button-border-hover);
             }
+            .card {
+                background-color: var(--bg-inner);
+                border-radius: var(--border-radius-inner);
+                border: var(--card-border);
+                box-shadow: var(--card-shadow), var(--card-light);
+            }
+            .card:hover, .card.active {
+                box-shadow: var(--card-shadow);
+                border-color: var(--active-hover);
+                border-top-color: var(--active-light);
+            }
+            .card-click {
+                cursor: pointer;
+            }
+            .card-click:hover {
+                background-color: var(--card-bg-hover);
+            }
+            .card.active .card-click, .card.card-click.active {
+                background-color: var(--active);
+            }
+            .card.active .card-click:hover, .card.card-click.active:hover {
+                background-color: var(--active-hover);
+            }
             .button {
                 cursor: pointer;
                 text-align: center;
@@ -181,6 +225,10 @@
             .button.disabled icon, .button.disabled:hover icon {
                 color: rgb(75, 75, 75);
             }
+            /* .button.active {
+                background-color: var(--active);
+                border: 1px solid var(--active);
+            } */
             .button-primary {
                 color: rgb(0, 0, 0);
                 font-weight: 600;
@@ -225,8 +273,9 @@
                 border: 1px solid var(--button-default-border-hover);
             }
             .radio-buttons > div.active {
-                background-color: var(--border-active);
-                border: 1px solid var(--border-active);
+                background-color: var(--active);
+                border: var(--button-active-border);
+                box-shadow: var(--button-active-light);
             }
             .input-inner[type=text] {
                 border-radius: var(--border-radius-inner);
@@ -318,11 +367,11 @@
                 background-color: rgb(49, 49, 49);
                 text-shadow: var(--text-shadow);
 
-                border-left-color: var(--border-active);
-                border-right-color: var(--border-active);
+                border-left-color: var(--active);
+                border-right-color: var(--active);
             }
             .select-entry.active {
-                background-color: var(--border-active);
+                background-color: var(--active);
             }
             .select-descr {
                 padding: 15px 5px;

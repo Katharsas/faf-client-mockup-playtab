@@ -38,35 +38,19 @@
     }
     .campaign {
         flex-shrink: 0;
-        border-radius: var(--border-radius-inner);
 
         display: flex;
         flex-direction: column;
         gap: 2px;
         overflow: hidden;
     }
-    .campaign.active {
-        border: var(--border-default);
-        border-color: var(--border-active);
-    }
     .campaign > * {
-        background-color:var(--bg-inner);
+        background-color: var(--bg-inner);
     }
     .campaign-select {
         width: 100%;
         padding: 5px 10px;
         font-size: 1.2em;
-
-        border-left: var(--border-default);
-        border-right: var(--border-default);
-    }
-    .campaign-select:hover {
-        border-color: var(--border-active);
-        background-color: var(--group-button-bg-hover);
-        
-    }
-    .campaign-select.active {
-        background-color: var(--border-active);
     }
     .campaign-name {
         display: flex;
@@ -101,11 +85,11 @@
         border-right: var(--border-default);
     }
     .campaign-missions > div:hover {
-        border-color: var(--border-active);
+        border-color: var(--active);
         background-color: var(--group-button-bg-hover-dark);
     }
     .campaign-missions > div.active {
-        background-color: var(--border-active);
+        background-color: var(--active);
     }
 
     /*
@@ -265,8 +249,8 @@
         <div class="group-button button-show-campaigns" style="display: none;">❮</div>
         <div class="campaign-list">
             <div class="campaign-group">
-                <div class="campaign">
-                    <div class="campaign-select">
+                <div class="campaign card">
+                    <div class="campaign-select card-click">
                         <div class="campaign-name">
                             <div>Supreme Commander</div>
                             <div>UEF</div>
@@ -287,8 +271,8 @@
                         <div class="mission-status"></div>
                     </div>
                 </div>
-                <div class="campaign">
-                    <div class="campaign-select">
+                <div class="campaign card">
+                    <div class="campaign-select card-click">
                         <div class="campaign-name">
                             <div>Supreme Commander</div>
                             <div>Cybran</div>
@@ -309,8 +293,8 @@
                         <div class="mission-status"></div>
                     </div>
                 </div>
-                <div class="campaign">
-                    <div class="campaign-select">
+                <div class="campaign card">
+                    <div class="campaign-select card-click">
                         <div class="campaign-name">
                             <div>Supreme Commander</div>
                             <div>Aeon</div>
@@ -332,8 +316,8 @@
                     </div>
                 </div>
             </div>
-            <div class="campaign">
-                <div class="campaign-select">
+            <div class="campaign card">
+                <div class="campaign-select card-click">
                     <div class="campaign-name">Supreme Commander: Forged Alliance</div>
                     <div class="campaign-desc">
                         The ultimate campaign experience.
@@ -351,7 +335,7 @@
                     <div class="mission-status"></div>
                 </div>
             </div>
-            <div class="campaign">
+            <div class="campaign card">
                 <div class="campaign-select">
                     <div class="campaign-name">
                         <div>FAF</div>
@@ -362,7 +346,7 @@
                     </div>
                 </div>
             </div>
-            <div class="campaign">
+            <div class="campaign card">
                 <div class="campaign-select">
                     <div class="campaign-name">
                         <div>FAF Custom Missions</div>
